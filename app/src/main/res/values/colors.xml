@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="actionbar_primary">#03A9F4</color>
+    <color name="status_bar">#0288D1</color>
+    <color name="drawer_white">#ffffff</color>
+    <color name="accent">#0288D1</color>
+</resources>
