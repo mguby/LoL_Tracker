@@ -1,9 +1,12 @@
 package com.markgubatan.loltracker.ui.SlidingTabs;
 
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.markgubatan.loltracker.ui.fragments.TeamFragment;
 
 /**
  * Created by Mark Gubatan on 6/23/2015.
@@ -18,25 +21,38 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        TeamFragment fragment = new TeamFragment();
+        Bundle bundle = new Bundle();
         switch(position) {
-
+            // Send the league to retrieve to the fragment
             case 0:
-                //LessonListFragment lesson = new LessonListFragment();
-                //MainFragment lesson = new MainFragment();
-                //return lesson;
+                bundle.putString("league", "NALCS");
+                break;
 
             case 1:
-                //QuizListFragment quiz = new QuizListFragment();
-                //SearchActivityFragment quiz = new SearchActivityFragment();
-                //return quiz;
+                bundle.putString("league", "EULCS");
+                break;
+
+            case 2:
+                bundle.putString("league", "LCK");
+                break;
+
+            case 3:
+                bundle.putString("league", "LPL");
+                break;
+
+            case 4:
+                bundle.putString("league", "LMS");
+                break;
 
         }
-        return null;
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 5;
     }
 
     @Override

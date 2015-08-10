@@ -13,8 +13,11 @@ import com.markgubatan.loltracker.R;
  */
 public class MainActivityFragment extends Fragment {
 
-    public MainActivityFragment() {
+    public static MainActivityFragment newInstance() {
+        return new MainActivityFragment();
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

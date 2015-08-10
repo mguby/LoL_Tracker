@@ -5,4 +5,27 @@
 
     <string name="drawer_open" Translateable = "false">Open</string>
     <string name="drawer_close" Translateable = "false">Close</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="nalcs_teams">
+        <item>Team Liquid</item>
+        <item>Counter Logic Gaming</item>
+        <item>Team Impulse</item>
+        <item>Gravity</item>
+        <item>Team Solo Mid</item>
+        <item>Dignitas</item>
+        <item>Cloud 9</item>
+        <item>Enemy Esports</item>
+        <item>Team 8</item>
+        <item>Team Dragon Knights</item>
+    </string-array>
+
+    <string-array name="eulcs_teams">
+        <item>no one matters</item>
+    </string-array>
+
+
+
 </resources>
