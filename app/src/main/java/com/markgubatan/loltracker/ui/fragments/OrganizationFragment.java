@@ -3,9 +3,6 @@ package com.markgubatan.loltracker.ui.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +13,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.markgubatan.loltracker.R;
-import com.markgubatan.loltracker.ui.fragments.OrganizationFragment;
-
+import com.markgubatan.loltracker.ui.fragments.dummy.DummyContent;
 
 /**
  * A fragment representing a list of Items.
@@ -28,17 +24,18 @@ import com.markgubatan.loltracker.ui.fragments.OrganizationFragment;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class TeamsFragment extends Fragment {
+public class OrganizationFragment extends Fragment implements AbsListView.OnItemClickListener {
 
-    private static final String[] NALCS = {"CLG", "TSM", "LMQ"};
-    private static final String[] EULCS = {"FNC", "H2K", "GMB"};
-    private static final String[] LCK = {"SKT", "KOO", "KTR"};
-    private static final String[] LPL = {"EDG", "LGD", "IG"};
-    private static final String[] LMS = {"AHQ", "TPA", "YOE"};
-    private String[] displayedTeams;
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
-    private FragmentManager fragmentManager;
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
+    private OnFragmentInteractionListener mListener;
 
     /**
      * The fragment's ListView/GridView.
@@ -51,15 +48,25 @@ public class TeamsFragment extends Fragment {
      */
     private ListAdapter mAdapter;
 
-//    public static TeamFragment newInstance() {
-//        return TeamFragment.newInstance();
-//    }
+    // TODO: Rename and change types of parameters
+    public static OrganizationFragment newInstance(String param1, String param2) {
+        OrganizationFragment fragment = new OrganizationFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static OrganizationFragment newInstance() {
+        return new OrganizationFragment();
+    }
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public TeamsFragment() {
+    public OrganizationFragment() {
     }
 
     @Override
@@ -67,59 +74,26 @@ public class TeamsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            String league = getArguments().getString("league");
-            Log.d("Tag", league);
-            getDisplayedTeams(league);
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        mAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, displayedTeams);
-
-        fragmentManager = getActivity().getSupportFragmentManager();
-    }
-
-    private void getDisplayedTeams(String league) {
-        switch(league) {
-            case "NALCS":
-                displayedTeams = NALCS;
-                break;
-            case "EULCS":
-                displayedTeams = EULCS;
-                break;
-            case "LCK":
-                displayedTeams = LCK;
-                break;
-            case "LPL":
-                displayedTeams = LPL;
-                break;
-            case "LMS":
-                displayedTeams = LMS;
-                break;
-            default:
-                displayedTeams = NALCS;
-        }
+        // TODO: Change Adapter to display your content
+        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_team, container, false);
+        View view = inflater.inflate(R.layout.fragment_organization, container, false);
 
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
-        mListView.setAdapter(mAdapter);
+        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String team = displayedTeams[position];
-                fragmentManager.beginTransaction()
-                    .replace(R.id.main_container, OrganizationFragment.newInstance())
-                    .addToBackStack(null)
-                    .commit();
-            }
-        });
+        mListView.setOnItemClickListener(this);
 
         return view;
     }
@@ -127,11 +101,27 @@ public class TeamsFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+//        try {
+//            mListener = (OnFragmentInteractionListener) activity;
+//        } catch (ClassCastException e) {
+//            throw new ClassCastException(activity.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        mListener = null;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (null != mListener) {
+            // Notify the active callbacks interface (the activity, if the
+            // fragment is attached to one) that an item has been selected.
+            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+        }
     }
 
     /**
@@ -159,7 +149,7 @@ public class TeamsFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(String id);
+        public void onFragmentInteraction(String id);
     }
 
 }
