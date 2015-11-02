@@ -25,7 +25,7 @@ import com.markgubatan.loltracker.R;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class TeamFragment extends Fragment {
+public class TeamsFragment extends Fragment {
 
     private static final String[] NALCS = {"CLG", "TSM", "LMQ"};
     private static final String[] EULCS = {"FNC", "H2K", "GMB"};
@@ -54,7 +54,7 @@ public class TeamFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public TeamFragment() {
+    public TeamsFragment() {
     }
 
     @Override
@@ -67,7 +67,6 @@ public class TeamFragment extends Fragment {
             getDisplayedTeams(league);
         }
 
-        // TODO: Change Adapter to display your content
         mAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, displayedTeams);
     }

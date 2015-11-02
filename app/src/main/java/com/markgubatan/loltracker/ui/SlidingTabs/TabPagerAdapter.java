@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.markgubatan.loltracker.ui.fragments.TeamFragment;
+import com.markgubatan.loltracker.ui.fragments.TeamsFragment;
 
 /**
  * Tab selector that chooses which league to display
@@ -21,7 +21,7 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        TeamFragment fragment = new TeamFragment();
+        TeamsFragment fragment = new TeamsFragment();
         Bundle bundle = new Bundle();
         bundle.putString("league", (String)titles[position]);
         fragment.setArguments(bundle);
