@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity{
 
 
         setDrawerToggle();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.temp_simple_list_item, titles);
         drawerList.setAdapter(adapter);
 
@@ -63,6 +63,8 @@ public class MainActivity extends ActionBarActivity{
                 if(position != currentDrawerItem) {
                     currentDrawerItem = position;
                     switch (position) {
+                        case 0: switchToFragment(MainActivityFragment.newInstance());
+                            break;
                         case 2: switchToFragment(LeaguesFragment.newInstance());
                             break;
                     }
