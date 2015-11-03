@@ -1,6 +1,7 @@
 package com.markgubatan.loltracker.ui.fragments;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +18,6 @@ import android.widget.TextView;
 
 import com.markgubatan.loltracker.R;
 import com.markgubatan.loltracker.ui.fragments.OrganizationFragment;
-
 
 /**
  * A fragment representing a list of Items.
@@ -38,7 +38,7 @@ public class TeamsFragment extends Fragment {
     private String[] displayedTeams;
 
     private FragmentManager fragmentManager;
-
+    private String[] teams;
 
     /**
      * The fragment's ListView/GridView.
@@ -51,8 +51,8 @@ public class TeamsFragment extends Fragment {
      */
     private ListAdapter mAdapter;
 
-//    public static TeamFragment newInstance() {
-//        return TeamFragment.newInstance();
+//    public static TeamsFragment newInstance() {
+//        return new TeamsFragment();
 //    }
 
     /**
@@ -69,7 +69,7 @@ public class TeamsFragment extends Fragment {
         if (getArguments() != null) {
             String league = getArguments().getString("league");
             Log.d("Tag", league);
-            getDisplayedTeams(league);
+            setTeamList(league);
         }
 
         mAdapter = new ArrayAdapter<>(getActivity(),
@@ -78,25 +78,25 @@ public class TeamsFragment extends Fragment {
         fragmentManager = getActivity().getSupportFragmentManager();
     }
 
-    private void getDisplayedTeams(String league) {
+    private void setTeamList(String league) {
+        Resources res = getResources();
         switch(league) {
             case "NALCS":
-                displayedTeams = NALCS;
+                teams = res.getStringArray(R.array.nalcs_teams);
                 break;
             case "EULCS":
-                displayedTeams = EULCS;
+                teams = res.getStringArray(R.array.eulcs_teams);
                 break;
             case "LCK":
-                displayedTeams = LCK;
+                teams = res.getStringArray(R.array.nalcs_teams);
                 break;
             case "LPL":
-                displayedTeams = LPL;
+                teams = res.getStringArray(R.array.nalcs_teams);
                 break;
             case "LMS":
-                displayedTeams = LMS;
-                break;
-            default:
-                displayedTeams = NALCS;
+                teams = res.getStringArray(R.array.nalcs_teams)
+
+                ;
         }
     }
 
@@ -115,9 +115,9 @@ public class TeamsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String team = displayedTeams[position];
                 fragmentManager.beginTransaction()
-                    .replace(R.id.main_container, OrganizationFragment.newInstance())
-                    .addToBackStack(null)
-                    .commit();
+                        .replace(R.id.main_container, OrganizationFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
