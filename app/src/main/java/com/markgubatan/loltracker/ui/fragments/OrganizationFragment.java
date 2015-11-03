@@ -1,6 +1,7 @@
 package com.markgubatan.loltracker.ui.fragments;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,16 +27,9 @@ import com.markgubatan.loltracker.ui.fragments.dummy.DummyContent;
  */
 public class OrganizationFragment extends Fragment implements AbsListView.OnItemClickListener {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private static final String TEAM = "team";
     private OnFragmentInteractionListener mListener;
+    private String[] players;
 
     /**
      * The fragment's ListView/GridView.
@@ -49,11 +43,10 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
     private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public static OrganizationFragment newInstance(String param1, String param2) {
+    public static OrganizationFragment newInstance(String team) {
         OrganizationFragment fragment = new OrganizationFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(TEAM, team);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,13 +67,22 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String team = getArguments().getString(TEAM);
+            players = getPlayers(team);
         }
 
         // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+        mAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, players);
+    }
+
+    private String[] getPlayers(String team) {
+        Resources res = getResources();
+        String teamTrimmed = team.replace(' ', '_').toLowerCase();
+        int teamID = res.getIdentifier(teamTrimmed, "array", getActivity().getPackageName());
+        if(teamID == 0)
+            return res.getStringArray(R.array.counter_logic_gaming);
+        return res.getStringArray(teamID);
     }
 
     @Override

@@ -21,11 +21,7 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        TeamsFragment fragment = new TeamsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("league", (String)titles[position]);
-        fragment.setArguments(bundle);
-        return fragment;
+        return TeamsFragment.newInstance((String) titles[position]);
     }
 
     @Override

@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.markgubatan.loltracker.R;
-import com.markgubatan.loltracker.ui.fragments.OrganizationFragment;
 
 /**
  * A fragment representing a list of Items.
@@ -30,12 +28,7 @@ import com.markgubatan.loltracker.ui.fragments.OrganizationFragment;
  */
 public class TeamsFragment extends Fragment {
 
-    private static final String[] NALCS = {"CLG", "TSM", "LMQ"};
-    private static final String[] EULCS = {"FNC", "H2K", "GMB"};
-    private static final String[] LCK = {"SKT", "KOO", "KTR"};
-    private static final String[] LPL = {"EDG", "LGD", "IG"};
-    private static final String[] LMS = {"AHQ", "TPA", "YOE"};
-    private String[] displayedTeams;
+    private static final String LEAGUE = "league";
 
     private FragmentManager fragmentManager;
     private String[] teams;
@@ -51,9 +44,13 @@ public class TeamsFragment extends Fragment {
      */
     private ListAdapter mAdapter;
 
-//    public static TeamsFragment newInstance() {
-//        return new TeamsFragment();
-//    }
+    public static TeamsFragment newInstance(String league) {
+        TeamsFragment fragment = new TeamsFragment();
+        Bundle args = new Bundle();
+        args.putString(LEAGUE, league);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -67,37 +64,21 @@ public class TeamsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            String league = getArguments().getString("league");
+            String league = getArguments().getString(LEAGUE);
             Log.d("Tag", league);
             setTeamList(league);
         }
 
         mAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, displayedTeams);
+                android.R.layout.simple_list_item_1, android.R.id.text1, teams);
 
         fragmentManager = getActivity().getSupportFragmentManager();
     }
 
     private void setTeamList(String league) {
         Resources res = getResources();
-        switch(league) {
-            case "NALCS":
-                teams = res.getStringArray(R.array.nalcs_teams);
-                break;
-            case "EULCS":
-                teams = res.getStringArray(R.array.eulcs_teams);
-                break;
-            case "LCK":
-                teams = res.getStringArray(R.array.nalcs_teams);
-                break;
-            case "LPL":
-                teams = res.getStringArray(R.array.nalcs_teams);
-                break;
-            case "LMS":
-                teams = res.getStringArray(R.array.nalcs_teams)
-
-                ;
-        }
+        int leagueID = res.getIdentifier(league.toLowerCase(), "array", getActivity().getPackageName());
+        teams = res.getStringArray(leagueID);
     }
 
     @Override
@@ -113,9 +94,9 @@ public class TeamsFragment extends Fragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String team = displayedTeams[position];
+                String team = teams[position];
                 fragmentManager.beginTransaction()
-                        .replace(R.id.main_container, OrganizationFragment.newInstance())
+                        .replace(R.id.main_container, OrganizationFragment.newInstance(team))
                         .addToBackStack(null)
                         .commit();
             }
