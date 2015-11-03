@@ -9,23 +9,151 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string-array name="nalcs_teams">
+    <!-- All of the teams for the different regions -->
+    <string-array name="nalcs">
         <item>Team Liquid</item>
         <item>Counter Logic Gaming</item>
         <item>Team Impulse</item>
         <item>Gravity</item>
-        <item>Team Solo Mid</item>
-        <item>Dignitas</item>
+        <item>Team SoloMid</item>
+        <item>Team Dignitas</item>
         <item>Cloud 9</item>
         <item>Enemy Esports</item>
         <item>Team 8</item>
         <item>Team Dragon Knights</item>
     </string-array>
 
-    <string-array name="eulcs_teams">
-        <item>no one matters</item>
+    <string-array name="eulcs">
+        <item>Copenhagen Wolves</item>
+        <item>Elements</item>
+        <item>Fnatic</item>
+        <item>Gambit Gaming</item>
+        <item>Giants Gaming</item>
+        <item>H2K</item>
+        <item>Origen</item>
+        <item>Roccat</item>
+        <item>SK Gaming</item>
+        <item>Unicorns of Love</item>
     </string-array>
 
+    <string-array name="lck">
+        <item>SKTelecom T1</item>
+        <item>CJ Entus</item>
+        <item>Jin Air Green Wings</item>
+        <item>KOO Tigers</item>
+        <item>KT Rolster</item>
+        <item>Longzhu Incredible Miracle</item>
+        <item>NaJin e-mFire</item>
+        <item>Rebels Anarchy</item>
+        <item>Samsung Galaxy</item>
+        <item>SBENU SONICBOOM</item>
+    </string-array>
 
+    <string-array name="lms">
+        <item>ahq e-Sports Club</item>
+        <item>Flash Wolves</item>
+        <item>HongKong Esports</item>
+        <item>Machi</item>
+        <item>Midnight Sun e-Sports</item>
+        <item>Assassin Sniper</item>
+        <item>Logitech G Sniper</item>
+        <item>Taipei Assassins</item>
+    </string-array>
+
+    <string-array name="lpl">
+        <item>Edward Gaming</item>
+        <item>King</item>
+        <item>Invictus Gaming</item>
+        <item>LGD Gaming</item>
+        <item>Master3</item>
+        <item>OMG</item>
+        <item>Qiao Gu</item>
+        <item>Royal Never Give Up</item>
+        <item>Snake</item>
+        <item>Team WE</item>
+        <item>Unlimited Potential</item>
+        <item>Vici Gaming</item>
+    </string-array>
+
+    <!-- NA LCS Players -->
+    <string-array name="cloud_9">
+        <item>Balls</item>
+        <item>Hai</item>
+        <item>Incarnati0n</item>
+        <item>Sneaky</item>
+        <item>LemonNation</item>
+    </string-array>
+
+    <string-array name="counter_logic_gaming">
+        <item>ZionSpartan</item>
+        <item>Xmithie</item>
+        <item>Pobelter</item>
+        <item>Doublelift</item>
+        <item>Aphromoo</item>
+    </string-array>
+
+    <string-array name="enemy_esports">
+        <item>Flaresz</item>
+        <item>Trashy</item>
+        <item>Innox</item>
+        <item>Otter</item>
+        <item>Bodydrop</item>
+    </string-array>
+
+    <string-array name="gravity">
+        <item>Hauntzer</item>
+        <item>Move</item>
+        <item>Keane</item>
+        <item>Altec</item>
+        <item>Bunny FuFuu</item>
+    </string-array>
+
+    <string-array name="team_8">
+        <item>CaliTrlolz8</item>
+        <item>Porpoise8</item>
+        <item>Goldenglue</item>
+        <item>Nien8</item>
+        <item>Dodo8</item>
+    </string-array>
+
+    <string-array name="team_dignitas">
+        <item>Gamsu</item>
+        <item>Helios</item>
+        <item>Shiphtur</item>
+        <item>CoreJJ</item>
+        <item>KiwiKiD</item>
+    </string-array>
+
+    <string-array name="team_dragon_knights">
+        <item>Seraph</item>
+        <item>kez</item>
+        <item>Ninja</item>
+        <item>Emperor</item>
+        <item>Smoothie</item>
+    </string-array>
+
+    <string-array name="team_impulse">
+        <item>Impact</item>
+        <item>Rush</item>
+        <item>Gate</item>
+        <item>Apollo</item>
+        <item>Adrian</item>
+    </string-array>
+
+    <string-array name="team_liquid">
+        <item>Quas</item>
+        <item>IWDominate</item>
+        <item>FeniX</item>
+        <item>Piglet</item>
+        <item>Xpecial</item>
+    </string-array>
+
+    <string-array name="team_solomid">
+        <item>Dyrus</item>
+        <item>Santorin</item>
+        <item>Bjergsen</item>
+        <item>WildTurtle</item>
+        <item>Lustboy</item>
+    </string-array>
 
 </resources>
