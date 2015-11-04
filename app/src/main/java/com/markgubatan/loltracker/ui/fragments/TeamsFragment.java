@@ -16,6 +16,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.markgubatan.loltracker.R;
+import com.markgubatan.loltracker.ui.adapters.GeneralAdapter;
 
 /**
  * A fragment representing a list of Items.
@@ -42,7 +43,7 @@ public class TeamsFragment extends Fragment {
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private ListAdapter mAdapter;
+    private GeneralAdapter mAdapter;
 
     public static TeamsFragment newInstance(String league) {
         TeamsFragment fragment = new TeamsFragment();
@@ -69,8 +70,8 @@ public class TeamsFragment extends Fragment {
             setTeamList(league);
         }
 
-        mAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, teams);
+
+        mAdapter = new GeneralAdapter(teams, getActivity());
 
         fragmentManager = getActivity().getSupportFragmentManager();
     }
