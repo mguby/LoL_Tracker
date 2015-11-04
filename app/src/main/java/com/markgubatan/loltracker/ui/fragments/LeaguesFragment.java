@@ -33,7 +33,6 @@ public class LeaguesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -41,13 +40,18 @@ public class LeaguesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_leagues, container, false);
         viewPager = (ViewPager)rootView.findViewById(R.id.viewpager);
-        adapter = new TabPagerAdapter(myContext.getSupportFragmentManager(), titleArray);
+        adapter = new TabPagerAdapter(getChildFragmentManager(), titleArray);
         viewPager.setAdapter(adapter);
         tabs = (SlidingTabLayout)rootView.findViewById(R.id.sliding_tabs);
         tabs.setDistributeEvenly(true);
         tabs.setViewPager(viewPager);
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
