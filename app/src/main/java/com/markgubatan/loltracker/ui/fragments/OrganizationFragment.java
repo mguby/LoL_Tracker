@@ -9,11 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.markgubatan.loltracker.R;
+import com.markgubatan.loltracker.ui.adapters.OrganizationAdapter;
 import com.markgubatan.loltracker.ui.fragments.dummy.DummyContent;
 
 /**
@@ -29,6 +29,7 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
 
     private static final String TEAM = "team";
     private OnFragmentInteractionListener mListener;
+    private String team;
     private String[] players;
 
     /**
@@ -40,7 +41,7 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private ListAdapter mAdapter;
+    private OrganizationAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
     public static OrganizationFragment newInstance(String team) {
@@ -67,13 +68,12 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            String team = getArguments().getString(TEAM);
+            team = getArguments().getString(TEAM);
             players = getPlayers(team);
         }
 
         // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, players);
+        mAdapter = new OrganizationAdapter(team, players, getActivity());
     }
 
     private String[] getPlayers(String team) {
@@ -92,7 +92,7 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
 
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
@@ -151,7 +151,7 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+        void onFragmentInteraction(String id);
     }
 
 }
