@@ -64,6 +64,7 @@ public class OrganizationAdapter extends BaseAdapter{
             convertView = inflater.inflate(R.layout.list_header_team, parent, false);
 
             holder.logo = (ImageView) convertView.findViewById(R.id.team_header_logo);
+            holder.name = (TextView) convertView.findViewById(R.id.team_header_name);
             holder.bio = (TextView) convertView.findViewById(R.id.team_header_bio);
         }
         else {
@@ -72,7 +73,8 @@ public class OrganizationAdapter extends BaseAdapter{
 
         convertView.setTag(holder);
         holder.logo.setImageBitmap(getTeamImage(organizationName));
-        holder.bio.setText(organizationName);
+        holder.name.setText(organizationName);
+        holder.bio.setText(R.string.example_bio);
 
         return convertView;
     }
@@ -116,6 +118,7 @@ public class OrganizationAdapter extends BaseAdapter{
 
     private class HeaderViewHolder {
         ImageView logo;
+        TextView name;
         TextView bio;
     }
 

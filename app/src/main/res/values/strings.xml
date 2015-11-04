@@ -9,6 +9,12 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="example_bio">The original League of Legends powerhouse, Counter Logic Gaming
+        crushed all competition during the infancy of LoL esports. However, CLG failed to build on
+        their foundation of success. While each season heralds their “potential,” CLG has not yet
+        surpassed TSM and Cloud9. However, esports champions are decided in the present, not the past.
+        One good season from CLG will silence all the disbelievers.</string>
+
     <!-- All of the teams for the different regions -->
     <string-array name="nalcs">
         <item>Team Liquid</item>

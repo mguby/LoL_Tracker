@@ -95,7 +95,21 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
         mListView.setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0) {
+                    TextView bio = (TextView) view.findViewById(R.id.team_header_bio);
+                    int visibility = bio.getVisibility();
+                    if(visibility == View.GONE) {
+                        bio.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        bio.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
 
         return view;
     }

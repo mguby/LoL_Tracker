@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="110dp">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/team_header_logo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_margin="16dp"/>
+        android:layout_marginTop="16dp"
+        />
+
+    <TextView
+        android:id="@+id/team_header_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name goes here"
+        android:gravity="center"
+        />
 
     <TextView
         android:id="@+id/team_header_bio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name goes here"
-        android:layout_gravity="bottom"
+        android:text="bio"
         android:gravity="center"
-        />
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"/>
 </LinearLayout>
