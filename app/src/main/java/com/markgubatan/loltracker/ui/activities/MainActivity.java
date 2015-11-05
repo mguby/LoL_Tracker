@@ -45,7 +45,7 @@ public class MainActivity extends ActionBarActivity{
         setSupportActionBar(toolbar);
 
         this.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_container, MainActivityFragment.newInstance())
+                .replace(R.id.main_container, LeaguesFragment.newInstance())
                 .commit();
 
 

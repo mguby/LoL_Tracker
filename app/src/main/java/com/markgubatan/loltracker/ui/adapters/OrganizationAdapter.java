@@ -50,14 +50,14 @@ public class OrganizationAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if(position == 0) {
-            return getHeaderView(position, convertView, parent);
+            return getHeaderView(convertView, parent);
         }
         else {
             return getRowView(position, convertView, parent);
         }
     }
 
-    private View getHeaderView(int position, View convertView, ViewGroup parent) {
+    private View getHeaderView(View convertView, ViewGroup parent) {
         HeaderViewHolder holder;
         if(convertView == null) {
             holder = new HeaderViewHolder();
