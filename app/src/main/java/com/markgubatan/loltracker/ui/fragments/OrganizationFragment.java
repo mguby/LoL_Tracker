@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,19 +29,12 @@ import com.markgubatan.loltracker.ui.fragments.dummy.DummyContent;
 public class OrganizationFragment extends Fragment implements AbsListView.OnItemClickListener {
 
     private static final String TEAM = "team";
+    private FragmentManager fragmentManager;
     private OnFragmentInteractionListener mListener;
     private String team;
     private String[] players;
 
-    /**
-     * The fragment's ListView/GridView.
-     */
     private AbsListView mListView;
-
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
     private OrganizationAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
@@ -72,8 +66,8 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
             players = getPlayers(team);
         }
 
-        // TODO: Change Adapter to display your content
         mAdapter = new OrganizationAdapter(team, players, getActivity());
+        fragmentManager = getActivity().getSupportFragmentManager();
     }
 
     private String[] getPlayers(String team) {
@@ -107,6 +101,11 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
                     else {
                         bio.setVisibility(View.GONE);
                     }
+                } else {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.main_container, PlayerFragment.newInstance(team, players[position - 1]))
+                            .addToBackStack(null)
+                            .commit();
                 }
             }
         });
