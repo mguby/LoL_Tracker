@@ -17,26 +17,26 @@ import com.markgubatan.loltracker.R;
 /**
  * Adapter to be used for Team and Player lists.
  */
-public class GeneralAdapter extends BaseAdapter{
-    private final static String TAG = "GeneralAdapter";
+public class TeamAdapter extends BaseAdapter{
+    private final static String TAG = "TeamAdapter";
 
-    private String[] items;
+    private String[] teams;
     private Context context;
     private LayoutInflater inflater;
 
-    public GeneralAdapter(String[] items, Context context) {
-        this.items = items;
+    public TeamAdapter(String[] teams, Context context) {
+        this.teams = teams;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
     }
     @Override
     public int getCount() {
-        return items.length;
+        return teams.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return items[position];
+        return teams[position];
     }
 
     @Override
@@ -61,7 +61,7 @@ public class GeneralAdapter extends BaseAdapter{
         // Need to set the tag or else the ListView elements will randomly order themselves
         convertView.setTag(holder);
 
-        String team= items[position];
+        String team= teams[position];
         holder.name.setText(team);
         holder.logo.setImageBitmap(getTeamImage(team));
         return convertView;

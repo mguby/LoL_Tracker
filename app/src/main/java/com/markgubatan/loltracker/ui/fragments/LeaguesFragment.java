@@ -20,7 +20,7 @@ public class LeaguesFragment extends Fragment {
     private TabPagerAdapter adapter;
     private SlidingTabLayout tabs;
     private MainActivity myContext;
-    CharSequence titleArray[] = {"NALCS", "EULCS", "LCK", "LPL", "LMS"};
+    private final static CharSequence titleArray[] = {"NALCS", "EULCS", "LCK", "LPL", "LMS"};
 
     public static LeaguesFragment newInstance() {
         return new LeaguesFragment();
