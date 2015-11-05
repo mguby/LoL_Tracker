@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.markgubatan.loltracker.R;
+import com.markgubatan.loltracker.tasks.BitmapRetriever;
 
 /**
  * ListView adapter for a team's list of players.
@@ -25,12 +26,14 @@ public class OrganizationAdapter extends BaseAdapter{
     private String[] players;
     private Context context;
     private LayoutInflater inflater;
+    private BitmapRetriever bitmapRetriever;
 
     public OrganizationAdapter(String organizationName, String[] players, Context context) {
         this.organizationName = organizationName;
         this.players = players;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
+        bitmapRetriever = new BitmapRetriever(context);
     }
     @Override
     public int getCount() {
@@ -72,7 +75,9 @@ public class OrganizationAdapter extends BaseAdapter{
         }
 
         convertView.setTag(holder);
-        holder.logo.setImageBitmap(getTeamImage(organizationName));
+        String teamFile = organizationName.toLowerCase().replace(' ', '_') + "_logo";
+        Bitmap bitmap = bitmapRetriever.getImage(teamFile, 4);
+        holder.logo.setImageBitmap(bitmap);
         holder.name.setText(organizationName);
         holder.bio.setText(R.string.example_bio);
 
@@ -99,22 +104,6 @@ public class OrganizationAdapter extends BaseAdapter{
         holder.role.setText(ROLES[position - 1]);
         return convertView;
     }
-
-    private Bitmap getTeamImage(String team) {
-        Log.d(TAG, "getTeamImage " + team);
-        Resources res = context.getResources();
-        team = team.toLowerCase().replace(' ', '_') + "_logo";
-        int id = res.getIdentifier(team, "drawable", context.getPackageName());
-        if(id == 0)
-            id = res.getIdentifier("team_liquid_logo", "drawable", context.getPackageName());
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 4;
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, id, options);
-    }
-
 
     private class HeaderViewHolder {
         ImageView logo;

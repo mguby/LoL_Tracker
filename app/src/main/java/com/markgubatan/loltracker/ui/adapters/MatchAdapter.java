@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.markgubatan.loltracker.R;
+import com.markgubatan.loltracker.tasks.BitmapRetriever;
 
 /**
  * Created by Mark on 11/4/2015.
@@ -25,6 +26,7 @@ public class MatchAdapter extends BaseAdapter {
     private String[] matches;
     private Context context;
     private LayoutInflater inflater;
+    private BitmapRetriever bitmapRetriever;
 
     public MatchAdapter(String playerName, String teamName, String[] matches, Context context) {
         this.playerName = playerName;
@@ -32,6 +34,7 @@ public class MatchAdapter extends BaseAdapter {
         this.matches = matches;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
+        bitmapRetriever = new BitmapRetriever(context);
     }
     @Override
     public int getCount() {
@@ -74,10 +77,11 @@ public class MatchAdapter extends BaseAdapter {
 
         convertView.setTag(holder);
         teamName = teamName.toLowerCase().replace(' ', '_') + "_logo";
-
-        holder.logo.setImageBitmap(getImage(teamName, 4));
+        Bitmap teamBitmap = bitmapRetriever.getImage(teamName, 4);
+        holder.logo.setImageBitmap(teamBitmap);
 //        holder.picture.setImageBitmap(getImage(playerName.toLowerCase()));
-        holder.picture.setImageBitmap(getImage("doublelift", 2));
+        Bitmap playerBitmap = bitmapRetriever.getImage("doublelift", 2);
+        holder.picture.setImageBitmap(playerBitmap);
         holder.name.setText(playerName);
 
         return convertView;
@@ -102,19 +106,6 @@ public class MatchAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private Bitmap getImage(String name, int sampleSize) {
-        Log.d(TAG, "getTeamImage " + name);
-        Resources res = context.getResources();
-        int id = res.getIdentifier(name, "drawable", context.getPackageName());
-        if(id == 0)
-            id = res.getIdentifier("team_liquid_logo", "drawable", context.getPackageName());
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = sampleSize;
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, id, options);
-    }
 
 
     private class HeaderViewHolder {
