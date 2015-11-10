@@ -92,7 +92,7 @@ public class MainActivity extends ActionBarActivity{
         this.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_container, fragment)
                 .commit();
-        Log.d(TAG, "Fragment switched?");
+        Log.d(TAG, "Fragment switched");
     }
 
 

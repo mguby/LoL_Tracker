@@ -1,10 +1,7 @@
 package com.markgubatan.loltracker.ui.adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,7 +10,7 @@ import android.widget.TextView;
 import android.view.LayoutInflater;
 
 import com.markgubatan.loltracker.R;
-import com.markgubatan.loltracker.tasks.BitmapRetriever;
+import com.markgubatan.loltracker.tasks.BitmapScaler;
 
 /**
  * Adapter to be used for Team and Player lists.
@@ -24,13 +21,13 @@ public class TeamAdapter extends BaseAdapter{
     private String[] teams;
     private Context context;
     private LayoutInflater inflater;
-    private BitmapRetriever bitmapRetriever;
+    private BitmapScaler bitmapScaler;
 
     public TeamAdapter(String[] teams, Context context) {
         this.teams = teams;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        bitmapRetriever = new BitmapRetriever(context);
+        bitmapScaler = new BitmapScaler(context);
     }
     @Override
     public int getCount() {
@@ -67,7 +64,7 @@ public class TeamAdapter extends BaseAdapter{
         String team= teams[position];
         holder.name.setText(team);
         String teamFile = team.toLowerCase().replace(' ', '_') + "_logo";
-        Bitmap teamBitmap = bitmapRetriever.getImage(teamFile, 4);
+        Bitmap teamBitmap = bitmapScaler.getImage(teamFile, 4);
         holder.logo.setImageBitmap(teamBitmap);
         return convertView;
     }
