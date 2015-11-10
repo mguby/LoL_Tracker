@@ -3,12 +3,13 @@ package com.markgubatan.loltracker.tasks;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.markgubatan.loltracker.Match;
 import com.markgubatan.loltracker.R;
 
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,10 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Asynchronous task to retrieve a player's match history using the Riot Games API.
- * Riot's API requires a player's ID rather than a player's name to retrieve their
+ * Asynchronous task to retrieve the basic information for a player's match history using the
+ * Riot Games API. Riot's API requires a player's ID rather than a player's name to retrieve their
  * match history and thus we first have to convert our summoner's name into an ID from
- * our String Array resource.
+ * our String Array resource. Also, since this API call only gives us the timestamp, champion, and
+ * matchID, we need another API call to get more detailed information on the matches.
  */
 public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
 
@@ -55,45 +57,25 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
         List<Match> matches = new ArrayList<>();
         try {
             URL url = constructQuery();
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
+            InputStream in = performRequest(url);
+            if (in == null) return null;
 
-            int responseCode = connection.getResponseCode();
-            if(responseCode == RATE_LIMIT_EXCEEDED) {
-                Log.e(TAG, "Rate Limit Exceeded");
-                return null;
-            }
-            InputStream in = new BufferedInputStream(connection.getInputStream());
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"), 10000);
-            StringBuilder builder = new StringBuilder();
-            String line = null;
-
-            while((line = reader.readLine()) != null) {
-                builder.append(line + "\n");
-            }
-
-            String jsonString = builder.toString();
+            String jsonString = getMatchesResponse(in);
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONArray retrievedMatches = jsonObject.getJSONArray(MATCHES);
 
             // We only retrieve the most recent 5 retrievedMatches because time/space
             for(int i = 0; i < 10; i++) {
                 JSONObject match = retrievedMatches.getJSONObject(i);
-                int matchID = match.getInt(MATCHID);
+                long matchID = match.getLong(MATCHID);
                 long timestamp = match.getLong(TIMESTAMP);
                 int champion = match.getInt(CHAMPION);
 
                 Match curMatch = new Match(timestamp, champion, matchID);
                 matches.add(curMatch);
             }
-        }
-        catch(MalformedURLException e) {
-            e.printStackTrace();
-        }
-        catch(IOException e) {
-            e.printStackTrace();
-        }
-        catch(JSONException e) {
+
+        } catch(IOException | JSONException e) {
             e.printStackTrace();
         }
 
@@ -147,8 +129,49 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
         return 0;
     }
 
-    @Override
-    protected void onPostExecute(List<Match> matchIDs) {
+    /**
+     * Performs the API request based on the URL created from the query
+     * @param url           final url to be used in the API call
+     * @return              InputStream of the request
+     * @throws IOException
+     */
+    @Nullable
+    private InputStream performRequest(URL url) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
 
+        int responseCode = connection.getResponseCode();
+        if(responseCode == RATE_LIMIT_EXCEEDED) {
+            Log.e(TAG, "Rate Limit Exceeded");
+            return null;
+        }
+
+        return new BufferedInputStream(connection.getInputStream());
     }
+
+    /**
+     * Creates String response of matches to be parsed from the InputStream created in
+     * performRequest;
+     * @param in            InputStream returned from performRequest
+     * @return              JSON returned from the InputStream in String form
+     * @throws IOException
+     */
+    @NonNull
+    private String getMatchesResponse(InputStream in) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"), 10000);
+        StringBuilder builder = new StringBuilder();
+        String line;
+
+        while((line = reader.readLine()) != null) {
+            line = line + "\n";
+            builder.append(line);
+        }
+
+        return builder.toString();
+    }
+
+//    @Override
+//    protected void onPostExecute(List<Match> matchIDs) {
+//        super.onPostExecute(matchIDs);
+//    }
 }
