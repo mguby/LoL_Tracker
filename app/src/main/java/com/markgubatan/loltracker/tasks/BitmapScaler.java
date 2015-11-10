@@ -9,12 +9,12 @@ import android.util.Log;
 /**
  * Created by Mark on 11/5/2015.
  */
-public class BitmapRetriever {
+public class BitmapScaler {
 
     private static final String TAG = "BitmapRetriever";
     private Context context;
 
-    public BitmapRetriever(Context context) {
+    public BitmapScaler(Context context) {
         this.context = context;
     }
 
