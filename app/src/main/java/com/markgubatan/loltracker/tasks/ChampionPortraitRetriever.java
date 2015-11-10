@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.markgubatan.loltracker.utility.JSONFileRetriever;
 
@@ -17,6 +18,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Iterator;
 
 /**
  * Async task to retrieve the champion portrait bitmap from the Riot Games static data endpoint.
@@ -29,11 +31,13 @@ public class ChampionPortraitRetriever extends AsyncTask<Integer, Void, Bitmap> 
     private int id;
     private JSONFileRetriever jsonRetriever;
     private Context context;
+    private ImageView imageView;
 
-    public ChampionPortraitRetriever(int id, Context context) {
+    public ChampionPortraitRetriever(int id, Context context, ImageView imageView) {
         this.id = id;
         this.context = context;
         jsonRetriever = new JSONFileRetriever();
+        this.imageView = imageView;
     }
 
     @Override
@@ -61,9 +65,11 @@ public class ChampionPortraitRetriever extends AsyncTask<Integer, Void, Bitmap> 
     private String getChampionFromId() throws IOException, JSONException {
         String championJson = jsonRetriever.jsonToStringFromAssetFolder("champion.json", context);
         JSONObject championsObject = new JSONObject(championJson);
-        JSONArray championsArray = championsObject.getJSONArray("data");
-        for(int i = 0; i < championsArray.length(); i++) {
-            JSONObject curChampion = championsArray.getJSONObject(i);
+        JSONObject championsData = championsObject.getJSONObject("data");
+        Iterator keys = championsData.keys();
+        while(keys.hasNext()) {
+            String key = (String)keys.next();
+            JSONObject curChampion = championsData.getJSONObject(key);
             int curKey = curChampion.getInt("key");
             if(curKey == id) {
                 return curChampion.getString("id");
@@ -82,5 +88,10 @@ public class ChampionPortraitRetriever extends AsyncTask<Integer, Void, Bitmap> 
         HTTPGetter getter = new HTTPGetter(url, TAG);
         InputStream in = getter.performRequest();
         return BitmapFactory.decodeStream(in);
+    }
+
+    @Override
+    protected void onPostExecute(Bitmap champion) {
+        imageView.setImageBitmap(champion);
     }
 }
