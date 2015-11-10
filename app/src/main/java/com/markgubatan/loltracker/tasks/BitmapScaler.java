@@ -11,7 +11,7 @@ import android.util.Log;
  */
 public class BitmapScaler {
 
-    private static final String TAG = "BitmapRetriever";
+    private static final String TAG = "BitmapScaler";
     private Context context;
 
     public BitmapScaler(Context context) {

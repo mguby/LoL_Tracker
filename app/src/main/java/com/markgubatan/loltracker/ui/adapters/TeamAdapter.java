@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.view.LayoutInflater;
 
 import com.markgubatan.loltracker.R;
+import com.markgubatan.loltracker.tasks.BitmapRetreiverAsync;
 import com.markgubatan.loltracker.tasks.BitmapScaler;
 
 /**
@@ -21,14 +22,13 @@ public class TeamAdapter extends BaseAdapter{
     private String[] teams;
     private Context context;
     private LayoutInflater inflater;
-    private BitmapScaler bitmapScaler;
 
     public TeamAdapter(String[] teams, Context context) {
         this.teams = teams;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        bitmapScaler = new BitmapScaler(context);
     }
+
     @Override
     public int getCount() {
         return teams.length;
@@ -64,8 +64,10 @@ public class TeamAdapter extends BaseAdapter{
         String team= teams[position];
         holder.name.setText(team);
         String teamFile = team.toLowerCase().replace(' ', '_') + "_logo";
-        Bitmap teamBitmap = bitmapScaler.getImage(teamFile, 4);
-        holder.logo.setImageBitmap(teamBitmap);
+
+        BitmapRetreiverAsync task = new BitmapRetreiverAsync(holder.logo, context, teamFile, 4);
+        task.execute();
+
         return convertView;
     }
 
