@@ -61,7 +61,9 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
         List<Match> matches = new ArrayList<>();
         try {
             URL url = constructQuery();
-            InputStream in = performRequest(url);
+
+            HTTPGetter getter = new HTTPGetter(url, TAG);
+            InputStream in = getter.performRequest();
             if (in == null) return null;
 
             String jsonString = getMatchesResponse(in);
@@ -128,25 +130,6 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
                 return i;
         }
         return 0;
-    }
-
-    /**
-     * Performs the API request based on the URL created from the query
-     * @param url           final url to be used in the API call
-     * @return              InputStream of the request
-     * @throws IOException
-     */
-    @Nullable
-    private InputStream performRequest(URL url) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-
-        int responseCode = connection.getResponseCode();
-        if(responseCode == RATE_LIMIT_EXCEEDED) {
-            Log.e(TAG, "Rate Limit Exceeded");
-            return null;
-        }
-        return new BufferedInputStream(connection.getInputStream());
     }
 
     /**
