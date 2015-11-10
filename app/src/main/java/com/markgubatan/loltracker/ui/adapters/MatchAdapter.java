@@ -49,7 +49,7 @@ public class MatchAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return matches.get(position - 1).getMatchID();
+        return position;
     }
 
     @Override
