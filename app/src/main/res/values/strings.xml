@@ -162,4 +162,85 @@
         <item>Lustboy</item>
     </string-array>
 
+    <!-- NA LCS SUMMONER IDS -->
+    <string-array name="cloud_9_ids">
+        <item>19203113</item>
+        <item>Hai</item>
+        <item>Incarnati0n</item>
+        <item>51405</item>
+        <item>LemonNation</item>
+    </string-array>
+
+    <string-array name="counter_logic_gaming_ids">
+        <item>ZionSpartan</item>
+        <item>Xmithie</item>
+        <item>Pobelter</item>
+        <item>44989342</item>
+        <item>442232</item>
+    </string-array>
+
+    <string-array name="enemy_esports_ids">
+        <item>Flaresz</item>
+        <item>Trashy</item>
+        <item>Innox</item>
+        <item>Otter</item>
+        <item>Bodydrop</item>
+    </string-array>
+
+    <string-array name="gravity_ids">
+        <item>Hauntzer</item>
+        <item>Move</item>
+        <item>Keane</item>
+        <item>22140119</item>
+        <item>20441329</item>
+    </string-array>
+
+    <string-array name="team_8_ids">
+        <item>CaliTrlolz8</item>
+        <item>Porpoise8</item>
+        <item>Goldenglue</item>
+        <item>Nien8</item>
+        <item>Dodo8</item>
+    </string-array>
+
+    <string-array name="team_dignitas_ids">
+        <item>Gamsu</item>
+        <item>Helios</item>
+        <item>Shiphtur</item>
+        <item>CoreJJ</item>
+        <item>KiwiKiD</item>
+    </string-array>
+
+    <string-array name="team_dragon_knights_ids">
+        <item>Seraph</item>
+        <item>kez</item>
+        <item>Ninja</item>
+        <item>Emperor</item>
+        <item>Smoothie</item>
+    </string-array>
+
+    <string-array name="team_impulse_ids">
+        <item>Impact</item>
+        <item>Rush</item>
+        <item>Gate</item>
+        <item>22064037</item>
+        <item>20151015</item>
+    </string-array>
+
+    <string-array name="team_liquid_ids">
+        <item>Quas</item>
+        <item>IWDominate</item>
+        <item>FeniX</item>
+        <item>Piglet</item>
+        <item>Xpecial</item>
+    </string-array>
+
+    <string-array name="team_solomid_ids">
+        <item>Dyrus</item>
+        <item>Santorin</item>
+        <item>47199162</item>
+        <item>WildTurtle</item>
+        <item>Lustboy</item>
+    </string-array>
+
 </resources>
