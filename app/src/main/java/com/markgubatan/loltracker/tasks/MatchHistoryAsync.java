@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.markgubatan.loltracker.Match;
 import com.markgubatan.loltracker.R;
+import com.markgubatan.loltracker.interfaces.OnMatchHistoryCompleteListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,23 +34,26 @@ import java.util.List;
  * matchID, we need another API call to get more detailed information on the matches.
  */
 public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
-
     private static final String MATCHES = "matches";
     private static final String MATCHID = "matchId";
     private static final String TIMESTAMP = "timestamp";
     private static final String CHAMPION = "champion";
     private static final String TAG = "MatchHistoryAsync";
     private static final int RATE_LIMIT_EXCEEDED = 429;
+    private static final int MATCHES_TO_PROCESS = 5;
 
     private String player, team;
     private Context context;
     private Resources res;
+    private OnMatchHistoryCompleteListener matchHistoryCompleteListener;
 
-    public MatchHistoryAsync(String team, String player, Context context) {
+    public MatchHistoryAsync(String team, String player, Context context,
+                             OnMatchHistoryCompleteListener matchHistoryCompleteListener) {
         this.player = player;
         this.context = context;
         this.team = team;
         res = context.getResources();
+        this.matchHistoryCompleteListener = matchHistoryCompleteListener;
     }
 
     @Override
@@ -65,7 +69,7 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
             JSONArray retrievedMatches = jsonObject.getJSONArray(MATCHES);
 
             // We only retrieve the most recent 5 retrievedMatches because time/space
-            for(int i = 0; i < 10; i++) {
+            for(int i = 0; i < MATCHES_TO_PROCESS; i++) {
                 JSONObject match = retrievedMatches.getJSONObject(i);
                 long matchID = match.getLong(MATCHID);
                 long timestamp = match.getLong(TIMESTAMP);
@@ -74,11 +78,9 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
                 Match curMatch = new Match(timestamp, champion, matchID);
                 matches.add(curMatch);
             }
-
         } catch(IOException | JSONException e) {
             e.printStackTrace();
         }
-
         return matches;
     }
 
@@ -89,7 +91,7 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
     private URL constructQuery() throws MalformedURLException {
         String summonerID = getSummonerIDFromName();
         String apiKey = res.getString(R.string.riot_api_key);
-        return new URL("https://https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/"
+        return new URL("https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/"
                 + summonerID + "?api_key=" + apiKey);
     }
 
@@ -109,7 +111,6 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
         int idArray = res.getIdentifier(teamIDs, "array", context.getPackageName());
         String[] ids = res.getStringArray(idArray);
         int position = getPlayerPosition(players, player);
-
         return ids[position];
     }
 
@@ -145,7 +146,6 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
             Log.e(TAG, "Rate Limit Exceeded");
             return null;
         }
-
         return new BufferedInputStream(connection.getInputStream());
     }
 
@@ -166,12 +166,12 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
             line = line + "\n";
             builder.append(line);
         }
-
         return builder.toString();
     }
 
-//    @Override
-//    protected void onPostExecute(List<Match> matchIDs) {
-//        super.onPostExecute(matchIDs);
-//    }
+    @Override
+    protected void onPostExecute(List<Match> matchIDs) {
+        matchHistoryCompleteListener.onCompleteListener(matchIDs);
+    }
+
 }

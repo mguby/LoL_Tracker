@@ -12,23 +12,26 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.markgubatan.loltracker.Match;
 import com.markgubatan.loltracker.R;
 import com.markgubatan.loltracker.tasks.BitmapRetriever;
 
+import java.util.List;
+
 /**
- * Created by Mark on 11/4/2015.
+ * Adapter for list of matches to be used in PlayerFragment.
  */
 public class MatchAdapter extends BaseAdapter {
     private final static String TAG = "OrganizationAdapter";
 
     private String playerName;
     private String teamName;
-    private String[] matches;
+    private List<Match> matches;
     private Context context;
     private LayoutInflater inflater;
     private BitmapRetriever bitmapRetriever;
 
-    public MatchAdapter(String playerName, String teamName, String[] matches, Context context) {
+    public MatchAdapter(String playerName, String teamName, List<Match> matches, Context context) {
         this.playerName = playerName;
         this.teamName = teamName;
         this.matches = matches;
@@ -38,17 +41,17 @@ public class MatchAdapter extends BaseAdapter {
     }
     @Override
     public int getCount() {
-        return matches.length + 1;
+        return matches.size() + 1;
     }
 
     @Override
     public Object getItem(int position) {
-        return matches[position - 1];
+        return matches.get(position - 1);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return matches.get(position - 1).getMatchID();
     }
 
     @Override
@@ -102,11 +105,9 @@ public class MatchAdapter extends BaseAdapter {
         // Need to set the tag or else the ListView elements will randomly order themselves
         convertView.setTag(holder);
 
-        holder.match.setText(matches[position - 1]);
+        holder.match.setText(matches.get(position - 1).getDate());
         return convertView;
     }
-
-
 
     private class HeaderViewHolder {
         ImageView picture;

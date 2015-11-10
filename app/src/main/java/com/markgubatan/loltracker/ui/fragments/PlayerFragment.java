@@ -9,9 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.markgubatan.loltracker.Match;
 import com.markgubatan.loltracker.R;
+import com.markgubatan.loltracker.interfaces.OnMatchHistoryCompleteListener;
+import com.markgubatan.loltracker.tasks.MatchHistoryAsync;
 import com.markgubatan.loltracker.ui.adapters.MatchAdapter;
 import com.markgubatan.loltracker.ui.fragments.dummy.DummyContent;
+
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -22,19 +27,16 @@ import com.markgubatan.loltracker.ui.fragments.dummy.DummyContent;
  */
 public class PlayerFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TEAM = "team";
     private static final String PLAYER = "player";
 
-    private static final String[] matches = {"MATCH1", "MATCH2", "MATCH3", "MATCH4", "MATCH5", "MATCH6"};
-
-    // TODO: Rename and change types of parameters
     private String team;
     private String player;
 
     private OnFragmentInteractionListener mListener;
     private MatchAdapter adapter;
+    private ListView matchList;
 
     public static PlayerFragment newInstance(String team, String player) {
         PlayerFragment fragment = new PlayerFragment();
@@ -61,18 +63,16 @@ public class PlayerFragment extends Fragment {
             player = getArguments().getString(PLAYER);
         }
 
-        // TODO: Change Adapter to display your content
-        adapter = new MatchAdapter(player, team, matches, getActivity());
+        MatchHistoryAsync task = new MatchHistoryAsync(team, player, getActivity(),
+                matchHistoryCompleteListener);
+        task.execute();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_player, container, false);
-
-        ListView mListView = (ListView)view.findViewById(R.id.player_matches);
-        mListView.setAdapter(adapter);
-
+        matchList = (ListView)view.findViewById(R.id.player_matches);
         return view;
     }
 
@@ -94,17 +94,6 @@ public class PlayerFragment extends Fragment {
         mListener = null;
     }
 
-//    @Override
-//    public void onListItemClick(ListView l, View v, int position, long id) {
-//        super.onListItemClick(l, v, position, id);
-//
-//        if (null != mListener) {
-//            // Notify the active callbacks interface (the activity, if the
-//            // fragment is attached to one) that an item has been selected.
-//            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
-//        }
-//    }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -117,7 +106,15 @@ public class PlayerFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+        void onFragmentInteraction(String id);
     }
+
+    protected OnMatchHistoryCompleteListener matchHistoryCompleteListener = new OnMatchHistoryCompleteListener() {
+        @Override
+        public void onCompleteListener(List<Match> matches) {
+            adapter = new MatchAdapter(player, team, matches, getActivity());
+            matchList.setAdapter(adapter);
+        }
+    };
 
 }
