@@ -3,6 +3,7 @@ package com.markgubatan.loltracker;
 import android.content.res.Resources;
 import android.support.test.espresso.matcher.BoundedMatcher;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import com.markgubatan.loltracker.ui.activities.MainActivity;
@@ -42,15 +43,27 @@ public class MainActivityTest2 extends ActivityInstrumentationTestCase2<MainActi
         assertNotNull("mainActivity was null", mainActivity);
     }
 
-    @SmallTest
+    @MediumTest
     public void testLeaguesFragment_displayed() {
         onView(withId(R.id.main_container)).check(matches(isDisplayed()));
 
         Resources res = mainActivity.getResources();
         String[] naLCS = res.getStringArray(R.array.nalcs);
+        String[] euLCS = res.getStringArray(R.array.eulcs);
+        String[] lpl = res.getStringArray(R.array.lpl);
+        String[] lck = res.getStringArray(R.array.lck);
+        String[] lms = res.getStringArray(R.array.lms);
 
-        for(String team : naLCS) {
-            onData(allOf(is(instanceOf(String.class)), withTeamName(team), isDisplayed()))
+        checkTeams(naLCS);
+        checkTeams(euLCS);
+        checkTeams(lpl);
+        checkTeams(lck);
+        checkTeams(lms);
+    }
+
+    private void checkTeams(String[] teams) {
+        for(String team : teams) {
+            onData(allOf( is(instanceOf(String.class)), withTeamName(team), isDisplayed() ))
                     .inAdapterView(withId(android.R.id.list));
         }
     }
