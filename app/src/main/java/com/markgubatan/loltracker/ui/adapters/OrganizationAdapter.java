@@ -39,6 +39,7 @@ public class OrganizationAdapter extends BaseAdapter{
 
     @Override
     public Object getItem(int position) {
+        if(position == 0) return null;
         return players[position - 1];
     }
 
