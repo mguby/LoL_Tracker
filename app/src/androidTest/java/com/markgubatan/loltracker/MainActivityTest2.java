@@ -27,6 +27,11 @@ import static org.hamcrest.Matchers.is;
 public class MainActivityTest2 extends ActivityInstrumentationTestCase2<MainActivity> {
 
     private MainActivity mainActivity;
+    private String[] naLCS;
+    private String[] euLCS;
+    private String[] lpl;
+    private String[] lck;
+    private String[] lms;
 
     public MainActivityTest2() {
         super(MainActivity.class);
@@ -36,6 +41,12 @@ public class MainActivityTest2 extends ActivityInstrumentationTestCase2<MainActi
     public void setUp() throws Exception {
         super.setUp();
         mainActivity = getActivity();
+        Resources res = mainActivity.getResources();
+        naLCS = res.getStringArray(R.array.nalcs);
+        euLCS = res.getStringArray(R.array.eulcs);
+        lpl = res.getStringArray(R.array.lpl);
+        lck = res.getStringArray(R.array.lck);
+        lms = res.getStringArray(R.array.lms);
     }
 
     @SmallTest
@@ -46,14 +57,6 @@ public class MainActivityTest2 extends ActivityInstrumentationTestCase2<MainActi
     @MediumTest
     public void testLeaguesFragment_displayed() {
         onView(withId(R.id.main_container)).check(matches(isDisplayed()));
-
-        Resources res = mainActivity.getResources();
-        String[] naLCS = res.getStringArray(R.array.nalcs);
-        String[] euLCS = res.getStringArray(R.array.eulcs);
-        String[] lpl = res.getStringArray(R.array.lpl);
-        String[] lck = res.getStringArray(R.array.lck);
-        String[] lms = res.getStringArray(R.array.lms);
-
         checkTeams(naLCS);
         checkTeams(euLCS);
         checkTeams(lpl);
