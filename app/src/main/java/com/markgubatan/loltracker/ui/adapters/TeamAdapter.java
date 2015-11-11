@@ -64,7 +64,7 @@ public class TeamAdapter extends BaseAdapter{
         String team= teams[position];
         holder.name.setText(team);
         String teamFile = team.toLowerCase().replace(' ', '_') + "_logo";
-
+        holder.logo.setImageBitmap(null);
         BitmapRetreiverAsync task = new BitmapRetreiverAsync(holder.logo, context, teamFile, 4);
         task.execute();
 
