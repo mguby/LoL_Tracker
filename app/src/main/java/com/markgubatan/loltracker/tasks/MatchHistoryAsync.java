@@ -38,6 +38,7 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
     private static final String MATCHID = "matchId";
     private static final String TIMESTAMP = "timestamp";
     private static final String CHAMPION = "champion";
+    private static final String QUEUE = "queue";
     private static final String TAG = "MatchHistoryAsync";
     private static final int RATE_LIMIT_EXCEEDED = 429;
     private static final int MATCHES_TO_PROCESS = 5;
@@ -76,8 +77,9 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
                 long matchID = match.getLong(MATCHID);
                 long timestamp = match.getLong(TIMESTAMP);
                 int champion = match.getInt(CHAMPION);
+                String queue = match.getString(QUEUE);
 
-                Match curMatch = new Match(timestamp, champion, matchID);
+                Match curMatch = new Match(timestamp, champion, matchID, queue);
                 matches.add(curMatch);
             }
         } catch(IOException | JSONException e) {

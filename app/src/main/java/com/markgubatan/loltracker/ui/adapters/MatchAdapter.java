@@ -95,6 +95,7 @@ public class MatchAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_item_match, parent, false);
 
             holder.match = (TextView) convertView.findViewById(R.id.match);
+            holder.queue = (TextView) convertView.findViewById(R.id.queue);
             holder.champion = (ImageView) convertView.findViewById(R.id.match_list_champion);
         }
         else {
@@ -106,6 +107,7 @@ public class MatchAdapter extends BaseAdapter {
 
         Match match = matches.get(position - 1);
         holder.match.setText(match.getDate());
+        holder.queue.setText(match.getQueue());
         ChampionPortraitRetriever retriever = new ChampionPortraitRetriever(
                 match.getChampion(), context, holder.champion);
         retriever.execute();
@@ -120,6 +122,7 @@ public class MatchAdapter extends BaseAdapter {
 
     private class RowViewHolder {
         TextView match;
+        TextView queue;
         ImageView champion;
     }
 }

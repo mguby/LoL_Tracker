@@ -12,11 +12,13 @@ public class Match {
     private int champion;
     private long matchID;
     private Date date;
+    private String queue;
 
-    public Match(long timestamp, int champion, long matchID) {
+    public Match(long timestamp, int champion, long matchID, String queue) {
         this.timestamp = timestamp;
         this.champion = champion;
         this.matchID = matchID;
+        this.queue = queue;
         date = new Date(timestamp);
     }
 
@@ -26,6 +28,10 @@ public class Match {
 
     public String getDate() {
         return date.toString();
+    }
+
+    public String getQueue() {
+        return queue;
     }
 
     public int getChampion() {
