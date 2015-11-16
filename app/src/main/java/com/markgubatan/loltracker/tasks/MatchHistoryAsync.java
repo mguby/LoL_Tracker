@@ -66,8 +66,8 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
             HTTPGetter getter = new HTTPGetter(url, TAG);
             InputStream in = getter.performRequest();
             if (in == null) return null;
-
-            String jsonString = getMatchesResponse(in);
+            StreamToStringConverter converter = new StreamToStringConverter();
+            String jsonString = converter.getString(in);
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONArray retrievedMatches = jsonObject.getJSONArray(MATCHES);
 
@@ -134,25 +134,7 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
         return 0;
     }
 
-    /**
-     * Creates String response of matches to be parsed from the InputStream created in
-     * performRequest;
-     * @param in            InputStream returned from performRequest
-     * @return              JSON returned from the InputStream in String form
-     * @throws IOException
-     */
-    @NonNull
-    private String getMatchesResponse(InputStream in) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"), 10000);
-        StringBuilder builder = new StringBuilder();
-        String line;
 
-        while((line = reader.readLine()) != null) {
-            line = line + "\n";
-            builder.append(line);
-        }
-        return builder.toString();
-    }
 
     @Override
     protected void onPostExecute(List<Match> matchIDs) {
