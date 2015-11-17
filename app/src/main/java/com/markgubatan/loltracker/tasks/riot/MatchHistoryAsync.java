@@ -1,26 +1,21 @@
-package com.markgubatan.loltracker.tasks;
+package com.markgubatan.loltracker.tasks.riot;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.markgubatan.loltracker.Match;
 import com.markgubatan.loltracker.R;
 import com.markgubatan.loltracker.interfaces.OnMatchHistoryCompleteListener;
+import com.markgubatan.loltracker.tasks.http.HTTPGetter;
+import com.markgubatan.loltracker.tasks.http.StreamToStringConverter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;

@@ -1,22 +1,19 @@
-package com.markgubatan.loltracker.tasks;
+package com.markgubatan.loltracker.tasks.riot;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.ImageView;
 
+import com.markgubatan.loltracker.tasks.http.HTTPGetter;
 import com.markgubatan.loltracker.utility.JSONFileRetriever;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
 

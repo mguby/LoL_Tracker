@@ -1,4 +1,4 @@
-package com.markgubatan.loltracker.tasks;
+package com.markgubatan.loltracker.tasks.riot;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import com.markgubatan.loltracker.Match;
 import com.markgubatan.loltracker.R;
 import com.markgubatan.loltracker.interfaces.OnMatchRetrievedListener;
+import com.markgubatan.loltracker.tasks.http.HTTPGetter;
+import com.markgubatan.loltracker.tasks.http.StreamToStringConverter;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.markgubatan.loltracker.Match;
 import com.markgubatan.loltracker.R;
 import com.markgubatan.loltracker.tasks.BitmapScaler;
-import com.markgubatan.loltracker.tasks.ChampionPortraitRetriever;
+import com.markgubatan.loltracker.tasks.riot.ChampionPortraitRetriever;
 
 import java.util.List;
 

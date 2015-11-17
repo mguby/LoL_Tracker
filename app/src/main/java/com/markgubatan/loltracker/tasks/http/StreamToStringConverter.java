@@ -1,4 +1,4 @@
-package com.markgubatan.loltracker.tasks;
+package com.markgubatan.loltracker.tasks.http;
 
 import android.support.annotation.NonNull;
 

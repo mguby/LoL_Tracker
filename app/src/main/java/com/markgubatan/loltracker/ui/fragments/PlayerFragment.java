@@ -6,16 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.markgubatan.loltracker.Match;
 import com.markgubatan.loltracker.R;
 import com.markgubatan.loltracker.interfaces.OnMatchHistoryCompleteListener;
-import com.markgubatan.loltracker.tasks.ChampionPortraitRetriever;
-import com.markgubatan.loltracker.tasks.MatchHistoryAsync;
+import com.markgubatan.loltracker.tasks.riot.MatchHistoryAsync;
 import com.markgubatan.loltracker.ui.adapters.MatchAdapter;
-import com.markgubatan.loltracker.ui.fragments.dummy.DummyContent;
 
 import java.util.List;
 
