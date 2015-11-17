@@ -9,6 +9,8 @@ import com.markgubatan.loltracker.R;
 import com.markgubatan.loltracker.listeners.OnMatchHistoryCompleteListener;
 import com.markgubatan.loltracker.tasks.http.HTTPGetter;
 import com.markgubatan.loltracker.tasks.http.StreamToStringConverter;
+import com.markgubatan.loltracker.tasks.json.parsing.BasicMatchParser;
+import com.markgubatan.loltracker.tasks.json.retrieval.JSONRetriever;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,10 +32,7 @@ import java.util.List;
  */
 public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
     private static final String MATCHES = "matches";
-    private static final String MATCHID = "matchId";
-    private static final String TIMESTAMP = "timestamp";
-    private static final String CHAMPION = "champion";
-    private static final String QUEUE = "queue";
+
     private static final String TAG = "MatchHistoryAsync";
     private static final int RATE_LIMIT_EXCEEDED = 429;
     private static final int MATCHES_TO_PROCESS = 5;
@@ -58,25 +57,11 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
         try {
             URL url = constructQuery();
 
-            HTTPGetter getter = new HTTPGetter(url, TAG);
-            InputStream in = getter.performRequest();
-            if (in == null) return null;
-            StreamToStringConverter converter = new StreamToStringConverter();
-            String jsonString = converter.getString(in);
-            JSONObject jsonObject = new JSONObject(jsonString);
-            JSONArray retrievedMatches = jsonObject.getJSONArray(MATCHES);
+            JSONRetriever retriever = new JSONRetriever(url);
+            JSONObject jsonObject = retriever.retrieve();
 
-            // We only retrieve the most recent 5 retrievedMatches because time/space
-            for(int i = 0; i < MATCHES_TO_PROCESS; i++) {
-                JSONObject match = retrievedMatches.getJSONObject(i);
-                long matchID = match.getLong(MATCHID);
-                long timestamp = match.getLong(TIMESTAMP);
-                int champion = match.getInt(CHAMPION);
-                String queue = match.getString(QUEUE);
-
-                Match curMatch = new Match(timestamp, champion, matchID, queue);
-                matches.add(curMatch);
-            }
+            BasicMatchParser parser = new BasicMatchParser(MATCHES_TO_PROCESS);
+            matches = parser.parseMatches(jsonObject.getJSONArray(MATCHES));
         } catch(IOException | JSONException e) {
             e.printStackTrace();
         }

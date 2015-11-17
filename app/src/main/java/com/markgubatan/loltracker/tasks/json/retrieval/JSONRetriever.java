@@ -28,7 +28,7 @@ public class JSONRetriever {
      * @throws IOException
      * @throws JSONException
      */
-    private JSONObject retrieve() throws IOException, JSONException {
+    public JSONObject retrieve() throws IOException, JSONException {
         HTTPGetter getter = new HTTPGetter(url, TAG);
         InputStream in = getter.performRequest();
         if(in == null) return null;

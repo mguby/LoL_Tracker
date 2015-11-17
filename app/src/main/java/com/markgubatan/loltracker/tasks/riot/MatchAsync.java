@@ -9,6 +9,7 @@ import com.markgubatan.loltracker.R;
 import com.markgubatan.loltracker.listeners.OnMatchRetrievedListener;
 import com.markgubatan.loltracker.tasks.http.HTTPGetter;
 import com.markgubatan.loltracker.tasks.http.StreamToStringConverter;
+import com.markgubatan.loltracker.tasks.json.retrieval.JSONRetriever;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,13 +45,8 @@ public class MatchAsync extends AsyncTask<Long, Void, Match>{
     protected Match doInBackground(Long... params) {
         try {
             URL url = constructQuery();
-            HTTPGetter getter = new HTTPGetter(url, TAG);
-            InputStream in = getter.performRequest();
-            if(in == null) return null;
-            StreamToStringConverter converter = new StreamToStringConverter();
-            String jsonString = converter.getString(in);
-            JSONObject jsonObject = new JSONObject(jsonString);
-
+            JSONRetriever retriever = new JSONRetriever(url);
+            JSONObject jsonObject = retriever.retrieve();
 
         } catch(IOException | JSONException e) {
             e.printStackTrace();
@@ -63,7 +59,6 @@ public class MatchAsync extends AsyncTask<Long, Void, Match>{
     private URL constructQuery() throws MalformedURLException {
         String apiKey = res.getString(R.string.riot_api_key);
         return new URL(BASE_URL + id + BASE_API + apiKey);
-
     }
 
 
