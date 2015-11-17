@@ -1,4 +1,4 @@
-package com.markgubatan.loltracker.interfaces;
+package com.markgubatan.loltracker.listeners;
 
 import com.markgubatan.loltracker.Match;
 

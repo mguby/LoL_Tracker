@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 
 import com.markgubatan.loltracker.Match;
 import com.markgubatan.loltracker.R;
-import com.markgubatan.loltracker.interfaces.OnMatchHistoryCompleteListener;
+import com.markgubatan.loltracker.listeners.OnMatchHistoryCompleteListener;
 import com.markgubatan.loltracker.tasks.http.HTTPGetter;
 import com.markgubatan.loltracker.tasks.http.StreamToStringConverter;
 
