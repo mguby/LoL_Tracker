@@ -1,6 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="128dp">
+
+    <ImageView
+        android:id="@+id/champion"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:background="@drawable/team_liquid_logo"
+        android:layout_margin="8dp"/>
+
+    <TextView
+        android:id="@+id/summoner_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Summoner Name"
+        android:layout_toRightOf="@+id/champion"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/kda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="K/D/A"
+        android:layout_below="@id/summoner_name"
+        android:layout_toRightOf="@+id/champion"
+        />
+    <ImageView
+        android:id="@+id/spell_1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/team_liquid_logo"
+        android:layout_toRightOf="@+id/summoner_name"
+        android:layout_marginTop="16dp"
+        />
+
+
+    <ImageView
+        android:id="@+id/spell_2"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/team_liquid_logo"
+        android:layout_toRightOf="@+id/spell_1"
+        android:layout_marginTop="16dp"
+        />
+
+    <ImageView
+        android:id="@+id/item_0"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/team_liquid_logo"
+        android:layout_below="@id/kda"
+        android:layout_toRightOf="@+id/champion"/>
+
+    <ImageView
+        android:id="@+id/item_1"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/team_liquid_logo"
+        android:layout_below="@id/kda"
+        android:layout_toRightOf="@+id/item_0"/>
+
+    <ImageView
+        android:id="@+id/item_2"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/team_liquid_logo"
+        android:layout_below="@id/kda"
+        android:layout_toRightOf="@+id/item_1"/>
+
+    <ImageView
+        android:id="@+id/item_3"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/team_liquid_logo"
+        android:layout_below="@id/kda"
+        android:layout_toRightOf="@+id/item_2"/>
+
+    <ImageView
+        android:id="@+id/item_4"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/team_liquid_logo"
+        android:layout_below="@id/kda"
+        android:layout_toRightOf="@+id/item_3"/>
+
+    <ImageView
+        android:id="@+id/item_5"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/team_liquid_logo"
+        android:layout_below="@id/kda"
+        android:layout_toRightOf="@+id/item_4"/>
 
 </RelativeLayout>
