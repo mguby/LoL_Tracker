@@ -1,9 +1,11 @@
 package com.markgubatan.loltracker;
 
+import java.io.Serializable;
+
 /**
  * Structure holding a match's player data
  */
-public class Player {
+public class Player implements Serializable {
     private int spell1Id;
     private int spell2Id;
     private int championId;

@@ -1,12 +1,15 @@
 package com.markgubatan.loltracker;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 import java.util.List;
 
 /**
  * Data structure containing all the information for a single match.
  */
-public class Match {
+public class Match implements Parcelable {
     private List<Player> blueTeam;
     private List<Player> redTeam;
     private long timestamp;
@@ -25,6 +28,48 @@ public class Match {
         this.queue = queue;
         date = new Date(timestamp);
     }
+
+    protected Match(Parcel in) {
+        in.readList(redTeam, null);
+        in.readList(blueTeam, null);
+        timestamp = in.readLong();
+        matchID = in.readLong();
+        champion = in.readInt();
+        queue = in.readString();
+        winner = in.readString();
+        duration = in.readInt();
+        date = (Date) in.readSerializable();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeList(redTeam);
+        dest.writeList(blueTeam);
+        dest.writeLong(timestamp);
+        dest.writeLong(matchID);
+        dest.writeInt(champion);
+        dest.writeString(queue);
+        dest.writeString(winner);
+        dest.writeInt(duration);
+        dest.writeSerializable(date);
+    }
+
+    public static final Creator<Match> CREATOR = new Creator<Match>() {
+        @Override
+        public Match createFromParcel(Parcel in) {
+            return new Match(in);
+        }
+
+        @Override
+        public Match[] newArray(int size) {
+            return new Match[size];
+        }
+    };
 
     public List<Player> getBlueTeam() {
         return blueTeam;
@@ -73,4 +118,5 @@ public class Match {
     public void setDuration(int duration) {
         this.duration = duration;
     }
+
 }

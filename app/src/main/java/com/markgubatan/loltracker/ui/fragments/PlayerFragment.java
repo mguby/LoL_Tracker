@@ -3,9 +3,11 @@ package com.markgubatan.loltracker.ui.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.markgubatan.loltracker.Match;
@@ -32,7 +34,7 @@ public class PlayerFragment extends Fragment {
     private String team;
     private String player;
 
-    private OnFragmentInteractionListener mListener;
+    private FragmentManager fragmentManager;
     private MatchAdapter adapter;
     private ListView matchList;
 
@@ -64,6 +66,8 @@ public class PlayerFragment extends Fragment {
         MatchHistoryAsync task = new MatchHistoryAsync(team, player, getActivity(),
                 matchHistoryCompleteListener);
         task.execute();
+
+        fragmentManager = getActivity().getSupportFragmentManager();
     }
 
     @Override
@@ -89,7 +93,6 @@ public class PlayerFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     /**
@@ -109,9 +112,21 @@ public class PlayerFragment extends Fragment {
 
     protected OnMatchHistoryCompleteListener matchHistoryCompleteListener = new OnMatchHistoryCompleteListener() {
         @Override
-        public void onCompleteListener(List<Match> matches) {
+        public void onCompleteListener(final List<Match> matches) {
             adapter = new MatchAdapter(player, team, matches, getActivity());
             matchList.setAdapter(adapter);
+            matchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if(position == 0 )
+                        return;
+
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.main_container, MatchFragment.newInstance(matches.get(position-1)))
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
         }
     };
 
