@@ -14,6 +14,8 @@ public class Match {
     private Date date;
     private String queue;
 
+    private int duration;
+
     public Match(long timestamp, int champion, long matchID, String queue) {
         this.timestamp = timestamp;
         this.champion = champion;
@@ -42,5 +44,11 @@ public class Match {
         return matchID;
     }
 
+    public int getDuration() {
+        return duration;
+    }
 
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 }

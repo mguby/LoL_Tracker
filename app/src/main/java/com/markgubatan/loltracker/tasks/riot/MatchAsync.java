@@ -9,6 +9,7 @@ import com.markgubatan.loltracker.R;
 import com.markgubatan.loltracker.listeners.OnMatchRetrievedListener;
 import com.markgubatan.loltracker.tasks.http.HTTPGetter;
 import com.markgubatan.loltracker.tasks.http.StreamToStringConverter;
+import com.markgubatan.loltracker.tasks.json.parsing.DetailedMatchParser;
 import com.markgubatan.loltracker.tasks.json.retrieval.JSONRetriever;
 
 import org.json.JSONException;
@@ -47,6 +48,9 @@ public class MatchAsync extends AsyncTask<Long, Void, Match>{
             URL url = constructQuery();
             JSONRetriever retriever = new JSONRetriever(url);
             JSONObject jsonObject = retriever.retrieve();
+
+            DetailedMatchParser parser = new DetailedMatchParser(match);
+            match = parser.parse(jsonObject);
 
         } catch(IOException | JSONException e) {
             e.printStackTrace();
