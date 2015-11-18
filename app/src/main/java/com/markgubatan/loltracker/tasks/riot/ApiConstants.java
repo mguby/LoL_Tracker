@@ -1,7 +1,7 @@
 package com.markgubatan.loltracker.tasks.riot;
 
 /**
- * Created by Mark Gubatan on 11/16/2015.
+ * Class to hold json constants
  */
 public class ApiConstants {
     public static final String MATCH_ID = "matchId";
@@ -30,10 +30,18 @@ public class ApiConstants {
     public static final String KILLS = "kills";
     public static final String LARGEST_SPREE = "largestKillingSpree";
     public static final String DEATHS = "deaths";
+    public static final String ASSISTS = "assists";
+    public static final String MINIONS_KILLED = "minionsKilled";
 
+    public static final String PARTICIPANT_ID = "participantId";
 
+    public static final String PARTICIPANT_IDENTITIES = "participantIdentities";
+    public static final String PLAYER = "player";
+    public static final String SUMMONER_ID = "summonerId";
+    public static final String SUMMONER_NAME = "summonerName";
 
-    public ApiConstants() {
+    public static final String TEAMS = "teams";
+    public static final String WINNER = "winner";
 
-    }
+    public ApiConstants() { }
 }

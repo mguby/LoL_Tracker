@@ -7,12 +7,14 @@ import java.util.List;
  * Data structure containing all the information for a single match.
  */
 public class Match {
-    private List<String> players;
+    private List<Player> blueTeam;
+    private List<Player> redTeam;
     private long timestamp;
     private int champion;
     private long matchID;
     private Date date;
     private String queue;
+    private String winner;
 
     private int duration;
 
@@ -24,8 +26,28 @@ public class Match {
         date = new Date(timestamp);
     }
 
-    public List<String> getPlayers() {
-        return players;
+    public List<Player> getBlueTeam() {
+        return blueTeam;
+    }
+
+    public void setBlueTeam(List<Player> blueTeam) {
+        this.blueTeam = blueTeam;
+    }
+
+    public List<Player> getRedTeam() {
+        return redTeam;
+    }
+
+    public void setRedTeam(List<Player> redTeam) {
+        this.redTeam = redTeam;
+    }
+
+    public String getWinner() {
+        return winner;
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
     }
 
     public String getDate() {
