@@ -124,6 +124,28 @@ public class MainActivityTest2 extends ActivityInstrumentationTestCase2<MainActi
         }
     }
 
+    @MediumTest
+    public void testPlayerFragment_layout() {
+        onData(allOf(is(instanceOf(String.class)), withName("Counter Logic Gaming")))
+                .inAdapterView(allOf(withId(R.id.team_list), isDisplayed()))
+                .check(matches(isDisplayed()))
+                .perform(click());
+
+        onData(allOf(is(instanceOf(String.class)), withName("Doublelift")))
+                .inAdapterView(withId(R.id.org_list))
+                .check(matches(isDisplayed()))
+                .perform(click());
+
+        onData(is(instanceOf(Match.class)))
+                .inAdapterView(withId(R.id.player_matches))
+                .atPosition(1)
+                .check(matches(isDisplayed()))
+                .perform(click());
+
+        onView(withId(R.id.match_info))
+                .check(matches(isDisplayed()));
+    }
+
     public static Matcher<Object> withName(String name) {
         return withName(equalTo(name));
     }
