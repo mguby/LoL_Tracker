@@ -14,6 +14,7 @@ import com.markgubatan.loltracker.R;
 import com.markgubatan.loltracker.listeners.OnMatchHistoryCompleteListener;
 import com.markgubatan.loltracker.listeners.OnMatchRetrievedListener;
 import com.markgubatan.loltracker.tasks.riot.MatchAsync;
+import com.markgubatan.loltracker.ui.adapters.DetailedMatchAdapter;
 import com.markgubatan.loltracker.ui.fragments.dummy.DummyContent;
 
 /**
@@ -25,11 +26,8 @@ import com.markgubatan.loltracker.ui.fragments.dummy.DummyContent;
  */
 public class MatchFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String MATCH = "match";
 
-    // TODO: Rename and change types of parameters
     private Match match;
 
     private OnFragmentInteractionListener mListener;
@@ -42,7 +40,6 @@ public class MatchFragment extends Fragment {
     public MatchFragment() {
     }
 
-    // TODO: Rename and change types of parameters
     public static MatchFragment newInstance(Match match) {
         MatchFragment fragment = new MatchFragment();
 //        Bundle args = new Bundle();
@@ -64,8 +61,7 @@ public class MatchFragment extends Fragment {
 //            mParam1 = getArguments().getParcelable(MATCH);
         }
 
-        MatchAsync matchAsync = new MatchAsync(match, listener, getActivity());
-        matchAsync.execute();
+
 
         // TODO: Change Adapter to display your content
     }
@@ -73,7 +69,11 @@ public class MatchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_player, container, false);
+        View view = inflater.inflate(R.layout.fragment_match, container, false);
+        listView = (ListView) view.findViewById(R.id.match_info);
+
+        MatchAsync matchAsync = new MatchAsync(match, listener, getActivity());
+        matchAsync.execute();
         return view;
     }
 
@@ -84,8 +84,8 @@ public class MatchFragment extends Fragment {
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+//            throw new ClassCastException(activity.toString()
+//                    + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -106,14 +106,17 @@ public class MatchFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
     }
 
+    /**
+     * Listener that is run when the match is successfully retrieved and parsed from API.
+     */
     protected OnMatchRetrievedListener listener = new OnMatchRetrievedListener() {
         @Override
         public void onComplete(Match match) {
-//            listView.setAdapter();
+            DetailedMatchAdapter adapter = new DetailedMatchAdapter(match, getActivity());
+            listView.setAdapter(adapter);
         }
     };
 

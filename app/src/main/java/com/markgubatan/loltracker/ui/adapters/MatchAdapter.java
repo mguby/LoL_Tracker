@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.markgubatan.loltracker.Match;
 import com.markgubatan.loltracker.R;
 import com.markgubatan.loltracker.tasks.BitmapScaler;
-import com.markgubatan.loltracker.tasks.riot.ChampionPortraitRetriever;
+import com.markgubatan.loltracker.tasks.riot.StaticPortraitRetriever;
 
 import java.util.List;
 
@@ -44,6 +44,7 @@ public class MatchAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
+        if(position == 0) return null;
         return matches.get(position - 1);
     }
 
@@ -108,8 +109,8 @@ public class MatchAdapter extends BaseAdapter {
         Match match = matches.get(position - 1);
         holder.match.setText(match.getDate());
         holder.queue.setText(match.getQueue());
-        ChampionPortraitRetriever retriever = new ChampionPortraitRetriever(
-                match.getChampion(), context, holder.champion);
+        StaticPortraitRetriever retriever = new StaticPortraitRetriever(
+                "champion", match.getChampion(), context, holder.champion);
         retriever.execute();
         return convertView;
     }

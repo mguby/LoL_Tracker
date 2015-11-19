@@ -1,5 +1,7 @@
 package com.markgubatan.loltracker.tasks.json.parsing;
 
+import android.util.Log;
+
 import com.markgubatan.loltracker.Match;
 import com.markgubatan.loltracker.Player;
 import com.markgubatan.loltracker.tasks.riot.ApiConstants;
@@ -22,6 +24,12 @@ public class DetailedMatchParser {
         this.match = match;
     }
 
+    /**
+     * Parses all of the relevant Match data from the json object
+     * @param jsonMatch         JSONObject containing all the match information
+     * @return                  Match data structure
+     * @throws JSONException
+     */
     public Match parse(JSONObject jsonMatch) throws JSONException {
         match.setDuration(jsonMatch.getInt(ApiConstants.DURATION));
 
@@ -36,6 +44,11 @@ public class DetailedMatchParser {
         return match;
     }
 
+    /**
+     * Parses the list of participants for the match
+     * @param participants      JSONArray of participants
+     * @throws JSONException
+     */
     private void parseParticipants(JSONArray participants) throws JSONException {
         List<Player> blueTeam = new ArrayList<>();
         List<Player> redTeam = new ArrayList<>();
@@ -55,6 +68,12 @@ public class DetailedMatchParser {
         match.setRedTeam(redTeam);
     }
 
+    /**
+     * Parses an individual player from the participants JSONArray
+     * @param cur               JSONObject of the current player
+     * @return                  Player data structure containing all of the player's information
+     * @throws JSONException
+     */
     private Player parsePlayer(JSONObject cur) throws JSONException {
         Player player = new Player();
 
@@ -84,6 +103,11 @@ public class DetailedMatchParser {
         return player;
     }
 
+    /**
+     * Parse the identities JSONArray to link each Player to its Summoner Name
+     * @param ids               Array of Participants with their identities
+     * @throws JSONException
+     */
     private void parseIdentities(JSONArray ids) throws JSONException {
         List<Player> blueTeam = match.getBlueTeam();
         List<Player> redTeam = match.getRedTeam();
@@ -101,6 +125,11 @@ public class DetailedMatchParser {
         }
     }
 
+    /**
+     * Set the winner of the match based on which teamID has their winner attribute set to true
+     * @param teams             JSONArray of Team information
+     * @throws JSONException
+     */
     private void setWinner(JSONArray teams) throws JSONException {
         Boolean blueWinner = teams.getJSONObject(0).getBoolean(ApiConstants.WINNER);
         if(blueWinner)
