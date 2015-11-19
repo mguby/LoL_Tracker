@@ -5,8 +5,8 @@
 
     <ImageView
         android:id="@+id/champion"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="84dp"
+        android:layout_height="84dp"
         android:background="@drawable/team_liquid_logo"
         android:layout_margin="8dp"/>
 
@@ -34,7 +34,7 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:background="@drawable/team_liquid_logo"
-        android:layout_toRightOf="@+id/summoner_name"
+        android:layout_toLeftOf="@+id/spell_2"
         android:layout_marginTop="16dp"
         />
 
@@ -44,56 +44,66 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:background="@drawable/team_liquid_logo"
-        android:layout_toRightOf="@+id/spell_1"
+        android:layout_toLeftOf="@+id/item_0"
         android:layout_marginTop="16dp"
         />
 
     <ImageView
         android:id="@+id/item_0"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/team_liquid_logo"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentRight="true"
+        />
+
+    <ImageView
+        android:id="@+id/item_1"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:background="@drawable/team_liquid_logo"
         android:layout_below="@id/kda"
         android:layout_toRightOf="@+id/champion"/>
 
     <ImageView
-        android:id="@+id/item_1"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@drawable/team_liquid_logo"
-        android:layout_below="@id/kda"
-        android:layout_toRightOf="@+id/item_0"/>
-
-    <ImageView
         android:id="@+id/item_2"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:background="@drawable/team_liquid_logo"
         android:layout_below="@id/kda"
         android:layout_toRightOf="@+id/item_1"/>
 
     <ImageView
         android:id="@+id/item_3"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:background="@drawable/team_liquid_logo"
         android:layout_below="@id/kda"
         android:layout_toRightOf="@+id/item_2"/>
 
     <ImageView
         android:id="@+id/item_4"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:background="@drawable/team_liquid_logo"
         android:layout_below="@id/kda"
         android:layout_toRightOf="@+id/item_3"/>
 
     <ImageView
         android:id="@+id/item_5"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:background="@drawable/team_liquid_logo"
         android:layout_below="@id/kda"
         android:layout_toRightOf="@+id/item_4"/>
+
+    <ImageView
+        android:id="@+id/item_6"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:background="@drawable/team_liquid_logo"
+        android:layout_below="@id/kda"
+        android:layout_toRightOf="@+id/item_5"/>
 
 </RelativeLayout>
