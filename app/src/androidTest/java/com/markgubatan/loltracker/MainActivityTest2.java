@@ -26,7 +26,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
 /**
- * Espresso version of MainActivity tests.
+ * Espresso version of MainActivity tests. t
  */
 public class MainActivityTest2 extends ActivityInstrumentationTestCase2<MainActivity> {
 
