@@ -1,5 +1,6 @@
 package com.markgubatan.loltracker.ui.activities;
 
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -37,6 +38,9 @@ public class MainActivity extends ActionBarActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActivityCompat.postponeEnterTransition(this);
+
         setContentView(R.layout.activity_main);
         String apiKey = getString(R.string.riot_api_key);
         Log.e(TAG, "the api key is " + apiKey);

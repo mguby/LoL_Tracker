@@ -2,14 +2,17 @@ package com.markgubatan.loltracker.ui.fragments;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -84,6 +87,23 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_organization, container, false);
 
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            String name = bundle.getString("TRANS_NAME");
+            String logo = bundle.getString("TRANS_LOGO");
+            Log.e("endLogo", logo);
+            Log.e("endName", name);
+
+            ImageView teamLogo = (ImageView)view.findViewById(R.id.team_header_logo);
+            teamLogo.setTransitionName(logo);
+
+            Bitmap logoBitmap = bundle.getParcelable("LOGO_BITMAP");
+            teamLogo.setImageBitmap(logoBitmap);
+
+            TextView teamName = (TextView)view.findViewById(R.id.team_header_name);
+            teamName.setTransitionName(name);
+            teamName.setText(bundle.getString(TEAM));
+        }
         // Set the adapter
         mListView = (AbsListView) view.findViewById(R.id.org_list);
         mListView.setAdapter(mAdapter);
@@ -92,23 +112,24 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 0) {
-                    TextView bio = (TextView) view.findViewById(R.id.team_header_bio);
-                    int visibility = bio.getVisibility();
-                    if(visibility == View.GONE) {
-                        bio.setVisibility(View.VISIBLE);
-                    }
-                    else {
-                        bio.setVisibility(View.GONE);
-                    }
-                } else {
+//                if(position == 0) {
+//                    TextView bio = (TextView) view.findViewById(R.id.team_header_bio);
+//                    int visibility = bio.getVisibility();
+//                    if(visibility == View.GONE) {
+//                        bio.setVisibility(View.VISIBLE);
+//                    }
+//                    else {
+//                        bio.setVisibility(View.GONE);
+//                    }
+//                } else {
                     fragmentManager.beginTransaction()
-                            .replace(R.id.main_container, PlayerFragment.newInstance(team, players[position - 1]))
+                            .replace(R.id.main_container, PlayerFragment.newInstance(team, players[position]))
                             .addToBackStack(null)
                             .commit();
-                }
+//                }
             }
         });
+
 
         return view;
     }

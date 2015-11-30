@@ -4,6 +4,8 @@
     android:layout_height="100dp">
 
     <ImageView
+        android:transitionName="logoTransition"
+        android:scaleType="centerInside"
         android:id="@+id/general_logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,6 +14,7 @@
         android:layout_margin="16dp"/>
 
     <TextView
+        android:transitionName="nameTransition"
         android:id="@+id/general_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

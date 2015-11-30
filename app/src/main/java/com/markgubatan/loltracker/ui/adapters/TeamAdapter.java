@@ -2,6 +2,7 @@ package com.markgubatan.loltracker.ui.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -67,6 +68,11 @@ public class TeamAdapter extends BaseAdapter{
         holder.logo.setImageBitmap(null);
         BitmapRetreiverAsync task = new BitmapRetreiverAsync(holder.logo, context, teamFile, 4);
         task.execute();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            holder.logo.setTransitionName("logo" + position);
+            holder.name.setTransitionName("name" + position);
+        }
 
         return convertView;
     }

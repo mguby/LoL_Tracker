@@ -34,13 +34,12 @@ public class OrganizationAdapter extends BaseAdapter{
     }
     @Override
     public int getCount() {
-        return players.length + 1;
+        return players.length;
     }
 
     @Override
     public Object getItem(int position) {
-        if(position == 0) return null;
-        return players[position - 1];
+        return players[position];
     }
 
     @Override
@@ -50,37 +49,37 @@ public class OrganizationAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(position == 0) {
-            return getHeaderView(convertView, parent);
-        }
-        else {
+//        if(position == 0) {
+//            return getHeaderView(convertView, parent);
+//        }
+//        else {
             return getRowView(position, convertView, parent);
-        }
+//        }
     }
 
-    private View getHeaderView(View convertView, ViewGroup parent) {
-        HeaderViewHolder holder;
-        if(convertView == null) {
-            holder = new HeaderViewHolder();
-            convertView = inflater.inflate(R.layout.list_header_team, parent, false);
-
-            holder.logo = (ImageView) convertView.findViewById(R.id.team_header_logo);
-            holder.name = (TextView) convertView.findViewById(R.id.team_header_name);
-            holder.bio = (TextView) convertView.findViewById(R.id.team_header_bio);
-        }
-        else {
-            holder = (HeaderViewHolder) convertView.getTag();
-        }
-
-        convertView.setTag(holder);
-        String teamFile = organizationName.toLowerCase().replace(' ', '_') + "_logo";
-        Bitmap bitmap = bitmapScaler.getImage(teamFile, 4);
-        holder.logo.setImageBitmap(bitmap);
-        holder.name.setText(organizationName);
-        holder.bio.setText(R.string.example_bio);
-
-        return convertView;
-    }
+//    private View getHeaderView(View convertView, ViewGroup parent) {
+//        HeaderViewHolder holder;
+//        if(convertView == null) {
+//            holder = new HeaderViewHolder();
+//            convertView = inflater.inflate(R.layout.list_header_team, parent, false);
+//
+//            holder.logo = (ImageView) convertView.findViewById(R.id.team_header_logo);
+//            holder.name = (TextView) convertView.findViewById(R.id.team_header_name);
+//            holder.bio = (TextView) convertView.findViewById(R.id.team_header_bio);
+//        }
+//        else {
+//            holder = (HeaderViewHolder) convertView.getTag();
+//        }
+//
+//        convertView.setTag(holder);
+//        String teamFile = organizationName.toLowerCase().replace(' ', '_') + "_logo";
+//        Bitmap bitmap = bitmapScaler.getImage(teamFile, 4);
+//        holder.logo.setImageBitmap(bitmap);
+//        holder.name.setText(organizationName);
+//        holder.bio.setText(R.string.example_bio);
+//
+//        return convertView;
+//    }
 
     private View getRowView(int position, View convertView, ViewGroup parent) {
         RowViewHolder holder;
@@ -98,8 +97,8 @@ public class OrganizationAdapter extends BaseAdapter{
         // Need to set the tag or else the ListView elements will randomly order themselves
         convertView.setTag(holder);
 
-        holder.name.setText(players[position - 1]);
-        holder.role.setText(ROLES[position - 1]);
+        holder.name.setText(players[position]);
+        holder.role.setText(ROLES[position]);
         return convertView;
     }
 
