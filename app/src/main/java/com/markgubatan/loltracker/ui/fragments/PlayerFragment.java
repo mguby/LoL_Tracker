@@ -1,18 +1,23 @@
 package com.markgubatan.loltracker.ui.fragments;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.markgubatan.loltracker.Match;
 import com.markgubatan.loltracker.R;
 import com.markgubatan.loltracker.listeners.OnMatchHistoryCompleteListener;
+import com.markgubatan.loltracker.tasks.BitmapScaler;
 import com.markgubatan.loltracker.tasks.riot.MatchHistoryAsync;
 import com.markgubatan.loltracker.ui.adapters.MatchAdapter;
 
@@ -74,6 +79,27 @@ public class PlayerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_player, container, false);
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            String teamLogoTransition = bundle.getString("LOGO_TRANSITION");
+            String playerNameTransition = bundle.getString("NAME_TRANSITION");
+            Log.e("endName", teamLogoTransition + " " + playerNameTransition);
+            Bitmap logoBitmap = bundle.getParcelable("LOGO_BITMAP");
+
+            ImageView teamLogo = (ImageView) view.findViewById(R.id.player_header_logo);
+            teamLogo.setImageBitmap(logoBitmap);
+            teamLogo.setTransitionName(teamLogoTransition);
+
+            TextView playerName = (TextView) view.findViewById(R.id.player_header_name);
+            playerName.setTransitionName(playerNameTransition);
+            playerName.setText(player);
+        }
+
+        ImageView playerImage = (ImageView) view.findViewById(R.id.player_header_picture);
+        BitmapScaler bitmapScaler = new BitmapScaler(getActivity());
+        Bitmap playerBitmap = bitmapScaler.getImage("doublelift", 2);
+        playerImage.setImageBitmap(playerBitmap);
+
         matchList = (ListView)view.findViewById(R.id.player_matches);
         return view;
     }

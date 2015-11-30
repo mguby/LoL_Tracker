@@ -3,9 +3,11 @@ package com.markgubatan.loltracker.ui.fragments;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +41,7 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
 
     private AbsListView mListView;
     private OrganizationAdapter mAdapter;
+    private View rootView;
 
     // TODO: Rename and change types of parameters
     public static OrganizationFragment newInstance(String team) {
@@ -85,7 +88,7 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_organization, container, false);
+        rootView = inflater.inflate(R.layout.fragment_organization, container, false);
 
         Bundle bundle = getArguments();
         if(bundle != null) {
@@ -94,18 +97,18 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
             Log.e("endLogo", logo);
             Log.e("endName", name);
 
-            ImageView teamLogo = (ImageView)view.findViewById(R.id.team_header_logo);
+            ImageView teamLogo = (ImageView)rootView.findViewById(R.id.team_header_logo);
             teamLogo.setTransitionName(logo);
 
             Bitmap logoBitmap = bundle.getParcelable("LOGO_BITMAP");
             teamLogo.setImageBitmap(logoBitmap);
 
-            TextView teamName = (TextView)view.findViewById(R.id.team_header_name);
+            TextView teamName = (TextView)rootView.findViewById(R.id.team_header_name);
             teamName.setTransitionName(name);
             teamName.setText(bundle.getString(TEAM));
         }
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(R.id.org_list);
+        mListView = (AbsListView) rootView.findViewById(R.id.org_list);
         mListView.setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
@@ -122,16 +125,43 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
 //                        bio.setVisibility(View.GONE);
 //                    }
 //                } else {
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.main_container, PlayerFragment.newInstance(team, players[position]))
-                            .addToBackStack(null)
-                            .commit();
+                String player = players[position];
+
+                TransitionInflater ti = TransitionInflater.from(getActivity());
+                setSharedElementReturnTransition(ti.inflateTransition(R.transition.image_transform));
+                setExitTransition(ti.inflateTransition(android.R.transition.fade));
+
+                PlayerFragment playerFragment = PlayerFragment.newInstance(team, players[position]);
+                playerFragment.setSharedElementEnterTransition(ti.inflateTransition(R.transition.image_transform));
+                playerFragment.setEnterTransition(ti.inflateTransition(android.R.transition.fade));
+
+                String teamLogoTransition = player + "LogoTransition";
+                String playerNameTransition = player + "NameTransition";
+                ImageView teamLogo = (ImageView) rootView.findViewById(R.id.team_header_logo);
+                teamLogo.setTransitionName(teamLogoTransition);
+                TextView playerTextView = (TextView) view.findViewById(R.id.player_name);
+                playerTextView.setTransitionName(playerNameTransition);
+
+                Log.e("startName", teamLogoTransition + " " + playerNameTransition);
+
+                Bundle bundle = playerFragment.getArguments();
+                bundle.putString("LOGO_TRANSITION", teamLogoTransition);
+                bundle.putString("NAME_TRANSITION", playerNameTransition);
+                bundle.putParcelable("LOGO_BITMAP", ((BitmapDrawable) teamLogo.getDrawable()).getBitmap());
+                playerFragment.setArguments(bundle);
+
+                fragmentManager.beginTransaction()
+                        .addSharedElement(teamLogo, teamLogoTransition)
+                        .addSharedElement(playerTextView, playerNameTransition)
+                        .replace(R.id.main_container, playerFragment)
+                        .addToBackStack("TeamToPlayer")
+                        .commit();
 //                }
             }
         });
 
 
-        return view;
+        return rootView;
     }
 
     @Override
