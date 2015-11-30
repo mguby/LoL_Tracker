@@ -70,8 +70,8 @@ public class TeamAdapter extends BaseAdapter{
         task.execute();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            holder.logo.setTransitionName("logo" + position);
-            holder.name.setTransitionName("name" + position);
+            holder.logo.setTransitionName(team + "logo" + position);
+            holder.name.setTransitionName(team + "name" + position);
         }
 
         return convertView;
