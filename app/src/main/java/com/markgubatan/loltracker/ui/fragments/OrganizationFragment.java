@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,8 +92,6 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
         if(bundle != null) {
             String name = bundle.getString("TRANS_NAME");
             String logo = bundle.getString("TRANS_LOGO");
-            Log.e("endLogo", logo);
-            Log.e("endName", name);
 
             ImageView teamLogo = (ImageView)view.findViewById(R.id.team_header_logo);
             teamLogo.setTransitionName(logo);
@@ -104,6 +103,7 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
             teamName.setTransitionName(name);
             teamName.setText(bundle.getString(TEAM));
         }
+
         // Set the adapter
         mListView = (AbsListView) view.findViewById(R.id.org_list);
         mListView.setAdapter(mAdapter);
@@ -122,12 +122,19 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
 //                        bio.setVisibility(View.GONE);
 //                    }
 //                } else {
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.main_container, PlayerFragment.newInstance(team, players[position]))
-                            .addToBackStack(null)
-                            .commit();
-//                }
-            }
+                TransitionInflater ti = TransitionInflater.from(getActivity());
+                setSharedElementReturnTransition(ti.inflateTransition(R.transition.image_transform));
+                setExitTransition(ti.inflateTransition(android.R.transition.fade));
+
+                PlayerFragment playerFragment = PlayerFragment.newInstance(team, players[position]);
+                playerFragment.setSharedElementEnterTransition(ti.inflateTransition(R.transition.image_transform));
+
+                fragmentManager.beginTransaction()
+                        .replace(R.id.main_container, PlayerFragment.newInstance(team, players[position]))
+                        .addToBackStack(null)
+                        .commit();
+//                    }
+                }
         });
 
 

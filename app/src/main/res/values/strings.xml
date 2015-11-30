@@ -6,6 +6,13 @@
     <string name="drawer_open" Translateable = "false">Open</string>
     <string name="drawer_close" Translateable = "false">Close</string>
 
+    <string name="transition_logo" Translateable="false">TRANSITION_LOGO</string>
+    <string name="transition_name" Translateable="false">TRANSITION_NAME</string>
+    <string name="logo_bitmap" Translateable="false">LOGO_BITMAP</string>
+
+
+
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
