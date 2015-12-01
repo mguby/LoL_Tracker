@@ -104,7 +104,32 @@ public class TeamsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String team = teams[position];
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    animateTransition(view, team);
+                    TransitionInflater ti = TransitionInflater.from(getActivity());
+                    setSharedElementReturnTransition(ti.inflateTransition(R.transition.image_transform));
+                    setExitTransition(ti.inflateTransition(android.R.transition.fade));
+
+                    Fragment orgFragment = OrganizationFragment.newInstance(team);
+                    orgFragment.setSharedElementEnterTransition(ti.inflateTransition(R.transition.image_transform));
+                    orgFragment.setEnterTransition(ti.inflateTransition(android.R.transition.fade));
+
+                    ImageView teamLogo = (ImageView) view.findViewById(R.id.general_logo);
+                    String logoTransition = teamLogo.getTransitionName();
+                    TextView teamName = (TextView) view.findViewById(R.id.general_name);
+                    String nameTransition = teamName.getTransitionName();
+
+                    Bundle bundle = orgFragment.getArguments();
+                    bundle.putString(getString(R.string.transition_logo), logoTransition);
+                    bundle.putString(getString(R.string.transition_name), nameTransition);
+                    bundle.putParcelable(getString(R.string.logo_bitmap),
+                            ((BitmapDrawable) teamLogo.getDrawable()).getBitmap());
+                    orgFragment.setArguments(bundle);
+
+                    fragmentManager.beginTransaction()
+                            .addSharedElement(teamLogo, logoTransition)
+                            .addSharedElement(teamName, nameTransition)
+                            .replace(R.id.main_container, orgFragment)
+                            .addToBackStack("LeagueToTeam")
+                            .commit();
                 }
                 else {
                     fragmentManager.beginTransaction()
@@ -123,32 +148,7 @@ public class TeamsFragment extends Fragment {
      * @param team      Current team
      */
     private void animateTransition(View view, String team) {
-        TransitionInflater ti = TransitionInflater.from(getActivity());
-        setSharedElementReturnTransition(ti.inflateTransition(R.transition.image_transform));
-        setExitTransition(ti.inflateTransition(android.R.transition.fade));
 
-        Fragment orgFragment = OrganizationFragment.newInstance(team);
-        orgFragment.setSharedElementEnterTransition(ti.inflateTransition(R.transition.image_transform));
-        orgFragment.setEnterTransition(ti.inflateTransition(android.R.transition.fade));
-
-        ImageView teamLogo = (ImageView) view.findViewById(R.id.general_logo);
-        String logoTransition = teamLogo.getTransitionName();
-        TextView teamName = (TextView) view.findViewById(R.id.general_name);
-        String nameTransition = teamName.getTransitionName();
-
-        Bundle bundle = orgFragment.getArguments();
-        bundle.putString(getString(R.string.transition_logo), logoTransition);
-        bundle.putString(getString(R.string.transition_name), nameTransition);
-        bundle.putParcelable(getString(R.string.logo_bitmap),
-                ((BitmapDrawable) teamLogo.getDrawable()).getBitmap());
-        orgFragment.setArguments(bundle);
-
-        fragmentManager.beginTransaction()
-                .addSharedElement(teamLogo, logoTransition)
-                .addSharedElement(teamName, nameTransition)
-                .replace(R.id.main_container, orgFragment)
-                .addToBackStack("LeagueToTeam")
-                .commit();
     }
 
     @Override

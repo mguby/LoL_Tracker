@@ -68,9 +68,7 @@ public class PlayerFragment extends Fragment {
             player = getArguments().getString(PLAYER);
         }
 
-        MatchHistoryAsync task = new MatchHistoryAsync(team, player, getActivity(),
-                matchHistoryCompleteListener);
-        task.execute();
+
 
         fragmentManager = getActivity().getSupportFragmentManager();
     }
@@ -79,6 +77,11 @@ public class PlayerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_player, container, false);
+
+        MatchHistoryAsync task = new MatchHistoryAsync(team, player, getActivity(),
+                matchHistoryCompleteListener);
+        task.execute();
+
         Bundle bundle = getArguments();
         if(bundle != null) {
             String teamLogoTransition = bundle.getString("LOGO_TRANSITION");
