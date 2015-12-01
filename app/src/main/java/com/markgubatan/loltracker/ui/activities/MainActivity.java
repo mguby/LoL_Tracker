@@ -26,7 +26,7 @@ public class MainActivity extends ActionBarActivity{
 
 
 
-    private String titles[] = new String[] {"Home", "Challenger Tier", "Teams", "Players"};
+    private String titles[] = new String[] {"Home", "Challenger Tier", "Teams", "Patch Notes"};
 
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
@@ -70,6 +70,8 @@ public class MainActivity extends ActionBarActivity{
                         case 0: switchToFragment(MainActivityFragment.newInstance());
                             break;
                         case 2: switchToFragment(LeaguesFragment.newInstance());
+                            break;
+                        case 3: switchToFragment(MainActivityFragment.newInstance());
                             break;
                     }
                     drawerLayout.closeDrawer(Gravity.START);

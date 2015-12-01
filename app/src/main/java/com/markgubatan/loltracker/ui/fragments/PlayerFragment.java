@@ -147,11 +147,8 @@ public class PlayerFragment extends Fragment {
             matchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(position == 0 )
-                        return;
-
                     fragmentManager.beginTransaction()
-                            .replace(R.id.main_container, MatchFragment.newInstance(matches.get(position-1)))
+                            .replace(R.id.main_container, MatchFragment.newInstance(matches.get(position)))
                             .addToBackStack(null)
                             .commit();
                 }
