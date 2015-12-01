@@ -12,7 +12,14 @@ import android.widget.TextView;
 import com.markgubatan.loltracker.Match;
 import com.markgubatan.loltracker.Player;
 import com.markgubatan.loltracker.R;
+import com.markgubatan.loltracker.tasks.json.retrieval.JSONRetriever;
 import com.markgubatan.loltracker.tasks.riot.StaticPortraitRetriever;
+import com.markgubatan.loltracker.utility.JSONFileRetriever;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 /**
  * Custom ListView adapter for displaying the players for a certain match
@@ -24,11 +31,16 @@ public class DetailedMatchAdapter extends BaseAdapter {
     private Match match;
     private Context context;
     private LayoutInflater inflater;
+    private JSONObject json;
 
-    public DetailedMatchAdapter(Match match, Context context) {
+    public DetailedMatchAdapter(Match match, Context context) throws JSONException, IOException {
         this.match = match;
         this.context = context;
         inflater = LayoutInflater.from(context);
+
+        JSONFileRetriever retriever = new JSONFileRetriever();
+        String jsonStr = retriever.jsonToStringFromAssetFolder("champion.json", context);
+        json = new JSONObject(jsonStr);
     }
 
     @Override
@@ -92,6 +104,15 @@ public class DetailedMatchAdapter extends BaseAdapter {
         String d = Integer.toString(cur.getDeaths());
         String a = Integer.toString(cur.getAssists());
         holder.kda.setText(k + "/" + d + "/" + a);
+
+
+
+        holder.champion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         return convertView;
     }
