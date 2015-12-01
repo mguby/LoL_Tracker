@@ -92,8 +92,8 @@ public class OrganizationFragment extends Fragment implements AbsListView.OnItem
 
         Bundle bundle = getArguments();
         if(bundle != null) {
-            String name = bundle.getString("TRANS_NAME");
-            String logo = bundle.getString("TRANS_LOGO");
+            String name = bundle.getString("TRANSITION_NAME");
+            String logo = bundle.getString("TRANSITION_LOGO");
             Log.e("endLogo", logo);
             Log.e("endName", name);
 
