@@ -5,9 +5,11 @@ import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,6 +69,8 @@ public class TeamsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ActivityCompat.postponeEnterTransition(getActivity());
+
         if (getArguments() != null) {
             String league = getArguments().getString(LEAGUE);
             Log.d("Tag", league);
@@ -100,33 +104,7 @@ public class TeamsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String team = teams[position];
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    setSharedElementReturnTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.image_transform));
-                    setExitTransition(TransitionInflater.from(getActivity()).inflateTransition(android.R.transition.fade));
-
-                    Fragment orgFragment = OrganizationFragment.newInstance(team);
-                    orgFragment.setSharedElementEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(R.transition.image_transform));
-                    orgFragment.setEnterTransition(TransitionInflater.from(getActivity()).inflateTransition(android.R.transition.fade));
-
-                    ImageView teamLogo = (ImageView) view.findViewById(R.id.general_logo);
-                    String logoTransition = teamLogo.getTransitionName();
-                    TextView teamName = (TextView) view.findViewById(R.id.general_name);
-                    String nameTransition = teamName.getTransitionName();
-
-                    Bundle bundle = orgFragment.getArguments();
-                    bundle.putString("TRANS_LOGO", logoTransition);
-                    Log.e("startLogo", logoTransition);
-                    bundle.putString("TRANS_NAME", nameTransition);
-                    Log.e("startName", nameTransition);
-                    bundle.putParcelable("LOGO_BITMAP", ((BitmapDrawable) teamLogo.getDrawable()).getBitmap());
-                    orgFragment.setArguments(bundle);
-
-                    FragmentTransaction ft = fragmentManager.beginTransaction();
-                    ft.addSharedElement(teamLogo, logoTransition);
-                    ft.addSharedElement(teamName, nameTransition);
-                    ft.replace(R.id.main_container, orgFragment)
-                            .addToBackStack("LeagueToTeam");
-                    ft.commit();
-
+                    animateTransition(view, team);
                 }
                 else {
                     fragmentManager.beginTransaction()
@@ -136,8 +114,41 @@ public class TeamsFragment extends Fragment {
                 }
             }
         });
-
         return view;
+    }
+
+    /**
+     * Shared element transition from TeamsFragment to OrganizationFragment
+     * @param view      ListView item that was clicked
+     * @param team      Current team
+     */
+    private void animateTransition(View view, String team) {
+        TransitionInflater ti = TransitionInflater.from(getActivity());
+        setSharedElementReturnTransition(ti.inflateTransition(R.transition.image_transform));
+        setExitTransition(ti.inflateTransition(android.R.transition.fade));
+
+        Fragment orgFragment = OrganizationFragment.newInstance(team);
+        orgFragment.setSharedElementEnterTransition(ti.inflateTransition(R.transition.image_transform));
+        orgFragment.setEnterTransition(ti.inflateTransition(android.R.transition.fade));
+
+        ImageView teamLogo = (ImageView) view.findViewById(R.id.general_logo);
+        String logoTransition = teamLogo.getTransitionName();
+        TextView teamName = (TextView) view.findViewById(R.id.general_name);
+        String nameTransition = teamName.getTransitionName();
+
+        Bundle bundle = orgFragment.getArguments();
+        bundle.putString(getString(R.string.transition_logo), logoTransition);
+        bundle.putString(getString(R.string.transition_name), nameTransition);
+        bundle.putParcelable(getString(R.string.logo_bitmap),
+                ((BitmapDrawable) teamLogo.getDrawable()).getBitmap());
+        orgFragment.setArguments(bundle);
+
+        fragmentManager.beginTransaction()
+                .addSharedElement(teamLogo, logoTransition)
+                .addSharedElement(teamName, nameTransition)
+                .replace(R.id.main_container, orgFragment)
+                .addToBackStack("LeagueToTeam")
+                .commit();
     }
 
     @Override
