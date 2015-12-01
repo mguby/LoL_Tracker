@@ -108,6 +108,7 @@ public class MatchAdapter extends BaseAdapter {
         Match match = matches.get(position);
         holder.match.setText(match.getDate());
         holder.queue.setText(match.getQueue());
+        holder.champion.setImageBitmap(null);
         StaticPortraitRetriever retriever = new StaticPortraitRetriever(
                 "champion", match.getChampion(), context, holder.champion);
         retriever.execute();

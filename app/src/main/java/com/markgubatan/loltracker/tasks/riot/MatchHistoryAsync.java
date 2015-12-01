@@ -35,7 +35,7 @@ public class MatchHistoryAsync extends AsyncTask<String, Void, List<Match>> {
 
     private static final String TAG = "MatchHistoryAsync";
     private static final int RATE_LIMIT_EXCEEDED = 429;
-    private static final int MATCHES_TO_PROCESS = 5;
+    private static final int MATCHES_TO_PROCESS = 10;
 
     private String player, team;
     private Context context;
