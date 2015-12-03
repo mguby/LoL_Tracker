@@ -163,7 +163,7 @@ public class DetailedMatchAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 fragmentManager.beginTransaction()
-                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getChampionId()))
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getChampionId(), "champion"))
                                 .addToBackStack(null)
                                 .commit();
             }
@@ -173,7 +173,7 @@ public class DetailedMatchAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 fragmentManager.beginTransaction()
-                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem0()))
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem0(), "item"))
                         .addToBackStack(null)
                         .commit();
             }
@@ -183,7 +183,7 @@ public class DetailedMatchAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 fragmentManager.beginTransaction()
-                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem1()))
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem1(), "item"))
                         .addToBackStack(null)
                         .commit();
             }
@@ -193,7 +193,7 @@ public class DetailedMatchAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 fragmentManager.beginTransaction()
-                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem2()))
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem2(), "item"))
                         .addToBackStack(null)
                         .commit();
             }
@@ -203,7 +203,7 @@ public class DetailedMatchAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 fragmentManager.beginTransaction()
-                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem3()))
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem3(), "item"))
                         .addToBackStack(null)
                         .commit();
             }
@@ -213,7 +213,7 @@ public class DetailedMatchAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 fragmentManager.beginTransaction()
-                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem4()))
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem4(), "item"))
                         .addToBackStack(null)
                         .commit();
             }
@@ -223,7 +223,7 @@ public class DetailedMatchAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 fragmentManager.beginTransaction()
-                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem5()))
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem5(), "item"))
                         .addToBackStack(null)
                         .commit();
             }
@@ -233,7 +233,7 @@ public class DetailedMatchAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 fragmentManager.beginTransaction()
-                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem6()))
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem6(), "item"))
                         .addToBackStack(null)
                         .commit();
             }
