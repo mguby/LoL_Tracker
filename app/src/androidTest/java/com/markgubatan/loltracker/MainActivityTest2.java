@@ -1,6 +1,7 @@
 package com.markgubatan.loltracker;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.support.test.espresso.matcher.BoundedMatcher;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.MediumTest;
@@ -143,6 +144,33 @@ public class MainActivityTest2 extends ActivityInstrumentationTestCase2<MainActi
                 .perform(click());
 
         onView(withId(R.id.match_info))
+                .check(matches(isDisplayed()));
+    }
+
+    @MediumTest
+    public void testGameObjectFragment_launch() {
+        onData(allOf(is(instanceOf(String.class)), withName("Counter Logic Gaming")))
+                .inAdapterView(allOf(withId(R.id.team_list), isDisplayed()))
+                .check(matches(isDisplayed()))
+                .perform(click());
+
+        onData(allOf(is(instanceOf(String.class)), withName("Doublelift")))
+                .inAdapterView(withId(R.id.org_list))
+                .check(matches(isDisplayed()))
+                .perform(click());
+
+        onData(is(instanceOf(Match.class)))
+                .inAdapterView(withId(R.id.player_matches))
+                .atPosition(1)
+                .check(matches(isDisplayed()))
+                .perform(click());
+
+        onData(allOf(is(instanceOf(Bitmap.class))))
+                .inAdapterView(withId(R.id.match_info))
+                .atPosition(1)
+                .perform(click());
+
+        onView(withId(R.id.game_object_name))
                 .check(matches(isDisplayed()));
     }
 
