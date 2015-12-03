@@ -1,6 +1,7 @@
 package com.markgubatan.loltracker.ui.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +17,10 @@ import com.markgubatan.loltracker.listeners.OnMatchRetrievedListener;
 import com.markgubatan.loltracker.tasks.riot.MatchAsync;
 import com.markgubatan.loltracker.ui.adapters.DetailedMatchAdapter;
 import com.markgubatan.loltracker.ui.fragments.dummy.DummyContent;
+
+import org.json.JSONException;
+
+import java.io.IOException;
 
 /**
  * A fragment representing a list of Items.
@@ -114,8 +119,8 @@ public class MatchFragment extends Fragment {
      */
     protected OnMatchRetrievedListener listener = new OnMatchRetrievedListener() {
         @Override
-        public void onComplete(Match match) {
-            DetailedMatchAdapter adapter = new DetailedMatchAdapter(match, getActivity());
+        public void onComplete(Match match) throws IOException, JSONException{
+            DetailedMatchAdapter adapter = new DetailedMatchAdapter(match, getActivity(), getActivity().getSupportFragmentManager());
             listView.setAdapter(adapter);
         }
     };

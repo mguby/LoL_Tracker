@@ -2,6 +2,7 @@ package com.markgubatan.loltracker.ui.adapters;
 
 import android.content.Context;
 import android.util.Log;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import com.markgubatan.loltracker.Player;
 import com.markgubatan.loltracker.R;
 import com.markgubatan.loltracker.tasks.json.retrieval.JSONRetriever;
 import com.markgubatan.loltracker.tasks.riot.StaticPortraitRetriever;
+import com.markgubatan.loltracker.ui.fragments.GameObjectFragment;
+import com.markgubatan.loltracker.ui.fragments.MatchFragment;
 import com.markgubatan.loltracker.utility.JSONFileRetriever;
 
 import org.json.JSONException;
@@ -32,11 +35,13 @@ public class DetailedMatchAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private JSONObject json;
+    private final FragmentManager fragmentManager;
 
-    public DetailedMatchAdapter(Match match, Context context) throws JSONException, IOException {
+    public DetailedMatchAdapter(Match match, Context context, FragmentManager fm) throws JSONException, IOException {
         this.match = match;
         this.context = context;
         inflater = LayoutInflater.from(context);
+        this.fragmentManager = fm;
 
         JSONFileRetriever retriever = new JSONFileRetriever();
         String jsonStr = retriever.jsonToStringFromAssetFolder("champion.json", context);
@@ -105,14 +110,7 @@ public class DetailedMatchAdapter extends BaseAdapter {
         String a = Integer.toString(cur.getAssists());
         holder.kda.setText(k + "/" + d + "/" + a);
 
-
-
-        holder.champion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        setOnClickListeners(cur, holder);
 
         return convertView;
     }
@@ -157,6 +155,89 @@ public class DetailedMatchAdapter extends BaseAdapter {
         retriever5.execute();
         StaticPortraitRetriever retriever6 = new StaticPortraitRetriever("item", cur.getItem6(), context, holder.item6);
         retriever6.execute();
+    }
+
+    private void setOnClickListeners(final Player cur, ViewHolder holder) {
+
+        holder.champion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getChampionId()))
+                                .addToBackStack(null)
+                                .commit();
+            }
+        });
+
+        holder.item0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem0()))
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        holder.item1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem1()))
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        holder.item2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem2()))
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        holder.item3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem3()))
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        holder.item4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem4()))
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        holder.item5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem5()))
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        holder.item6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.main_container, GameObjectFragment.newInstance(cur.getItem6()))
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 
     private class ViewHolder {

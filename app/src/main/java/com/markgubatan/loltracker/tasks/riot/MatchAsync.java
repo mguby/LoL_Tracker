@@ -68,6 +68,11 @@ public class MatchAsync extends AsyncTask<Long, Void, Match>{
 
     @Override
     protected void onPostExecute(Match match) {
-        listener.onComplete(match);
+        try {
+            listener.onComplete(match);
+        }
+        catch(IOException | JSONException e) {
+
+        }
     }
 }
